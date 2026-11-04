@@ -221,6 +221,9 @@
     .proposal-document .proposal-sheet::before,.proposal-document .proposal-sheet::after{content:"";position:absolute;right:0;left:0;height:5mm;padding:0;border:0;background:#000}
     .proposal-document .proposal-sheet::before{top:0}
     .proposal-document .proposal-sheet::after{top:auto;bottom:0}
+
+/* Propostas avulsas da administração */
+.manual-proposal-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}.manual-pick-grid{display:grid;grid-template-columns:2fr 2fr 100px;gap:12px}.manual-pick-grid .wide{grid-column:1/-1}.manual-part-preview{display:flex;gap:12px;align-items:flex-start;margin:14px 0;padding:12px;border:1px solid var(--border2);border-radius:7px;min-height:70px}.manual-part-preview img{width:94px;height:80px;object-fit:contain;flex:none}.manual-part-preview p{margin:4px 0;white-space:pre-line}.manual-items{margin-top:15px}.manual-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--border2)}.manual-item b,.manual-item small{display:block}.manual-item small{margin-top:4px;color:var(--muted)}.manual-proposal-footer{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-top:18px}.manual-proposal-footer .small-note{max-width:760px}.manual-proposal-footer button{flex:none}@media(max-width:850px){.manual-proposal-layout{grid-template-columns:1fr}}@media(max-width:560px){.manual-pick-grid{grid-template-columns:1fr}.manual-pick-grid .wide{grid-column:auto}.manual-proposal-footer{display:block}.manual-proposal-footer button{margin-top:12px}}
     </style>
 </head>
 <body>
@@ -245,6 +248,7 @@
       <button type="button" data-page="users" class="admin-only"><svg class="tab-icon" aria-hidden="true"><use href="#icon-users"/></svg>Clientes e usuários</button>
       <button type="button" data-page="requests" class="admin-only"><svg class="tab-icon" aria-hidden="true"><use href="#icon-request"/></svg>Orçamentos recebidos</button>
       <button type="button" data-page="catalog-admin" class="admin-only"><svg class="tab-icon" aria-hidden="true"><use href="#icon-catalog"/></svg>Catálogo de peças</button>
+       <button type="button" data-page="manual-proposal" class="admin-only"><svg class="tab-icon" aria-hidden="true"><use href="#icon-request"/></svg>Criar proposta</button>
     </nav>
     <span id="signedUser" class="signed-user"></span><button type="button" id="logout" class="ghost">Sair</button>
   </header>
@@ -291,6 +295,25 @@
     </section>
     <section id="page-requests" class="page admin-only">
       <div class="eyebrow">Administração</div><h1 class="page-title">Solicitações de orçamento</h1><p class="lede">Selecione um cliente para consultar todas as solicitações registradas neste navegador.</p><div id="requestsList"></div>
+    </section>
+    <section id="page-manual-proposal" class="page admin-only" aria-label="Criar proposta avulsa">
+      <div class="eyebrow">Administração</div><h1 class="page-title">Criar proposta</h1><p class="lede">Monte uma proposta para uma solicitação recebida fora do portal. Escolha as peças do catálogo; as fotos e descrições cadastradas entram na proposta técnica.</p>
+      <div class="manual-proposal-layout"><div class="panel admin-form"><h2>Destinatário</h2><div class="form-grid">
+        <div class="form-group"><label for="manualCompany">Empresa *</label><input id="manualCompany" class="field" autocomplete="organization"></div>
+        <div class="form-group"><label for="manualContact">Contato *</label><input id="manualContact" class="field"></div>
+        <div class="form-group"><label for="manualEmail">E-mail *</label><input id="manualEmail" class="field" type="email"></div>
+        <div class="form-group"><label for="manualPhone">Celular do contato *</label><input id="manualPhone" class="field" type="tel"></div>
+        <div class="form-group wide"><label for="manualAddress">Endereço da empresa *</label><input id="manualAddress" class="field"></div>
+        <div class="form-group"><label for="manualCity">Cidade / UF *</label><input id="manualCity" class="field"></div>
+        <div class="form-group"><label for="manualCompanyPhone">Telefone da empresa</label><input id="manualCompanyPhone" class="field" type="tel"></div>
+        <div class="form-group wide"><label for="manualReference">Referência</label><input id="manualReference" class="field" placeholder="Ex.: Solicitação por e-mail de 28/10/2026"></div>
+      </div></div><div class="panel admin-form"><h2>Peças da proposta</h2><div class="manual-pick-grid">
+        <div class="form-group"><label for="manualEquipment">Equipamento</label><select id="manualEquipment" class="field"></select></div>
+        <div class="form-group"><label for="manualPart">Peça</label><select id="manualPart" class="field"></select></div>
+        <div class="form-group"><label for="manualQuantity">Quantidade</label><input id="manualQuantity" class="field" type="number" min="1" max="100000" step="1" value="1"></div>
+        <div class="form-group wide"><label for="manualSpecification">Especificação da peça</label><input id="manualSpecification" class="field" maxlength="160" placeholder="Ex.: furo Ø12 mm"></div>
+      </div><div id="manualPartPreview" class="manual-part-preview small-note"></div><button id="manualAddPart" class="btn secondary" type="button">Adicionar peça</button><div id="manualItems" class="manual-items"></div></div></div>
+      <div class="panel admin-form manual-proposal-footer"><div><h2>Gerar proposta</h2><p class="small-note">A seleção e os dados preenchidos ficam somente neste navegador. No gerador, importe o JSON da formação de preço para conferir os valores antes de baixar a proposta.</p></div><button id="manualOpenProposal" class="btn" type="button">Abrir proposta</button></div>
     </section>
     <section id="page-catalog-admin" class="page admin-only">
       <div class="eyebrow">Administração</div><h1 class="page-title">Catálogo de peças</h1><p class="lede">Cadastre equipamentos e peças; acrescente descrições e fotos para ajudar o cliente a identificar o item correto.</p><p class="notice">Cadastros e descrições são compartilhados pelo Firebase entre usuários autorizados.</p>
@@ -430,7 +453,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function partSpecificationField(k,details){const prompt=String(details.specificationPrompt||details.description||'Ex.: furo Ø12mm, fenda 0,15mm').trim();return details.allowSpecification?`<label class="part-spec-field">Especificação desta peça *<input class="field" type="text" maxlength="160" data-part-spec="${k}" value="${esc(cartSpecs[k]||'')}" placeholder="${esc(prompt)}" aria-label="Especificação de ${esc(catalog[Number(k.split(':')[0])]?.parts[Number(k.split(':')[1])]||'peça')}"></label>`:''}
   function updateCount(){const n=Object.keys(cart).length;$('cartCount').textContent=n;$('cartCount').hidden=!n}
   function hidePreview(){pendingRequest=null;$('resultBlock').style.display='none';$('sendStatus').textContent=''}
-  function page(name){if(name==='manage-orders'){name='users';userFilter='imports'}if(user?.role==='admin'&&!['users','requests','catalog-admin'].includes(name))return;if(user?.role==='client'&&!['schedule','catalog','catalog-cartamac','catalog-thirdparty','quote','history'].includes(name))return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+name));document.querySelectorAll('.nav button[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===(name.startsWith('catalog-')?'catalog':name)));if(name==='catalog-cartamac')showCatalogStageChooser();if(name==='quote')renderQuote();if(name==='history'){renderClientHistory();refreshClientHistory()}if(name==='schedule')renderOrders();if(name==='users')renderUsers();if(name==='requests')renderRequests();if(name==='catalog-admin')renderCatalogAdmin();window.scrollTo(0,0)}
+  function page(name){if(name==='manage-orders'){name='users';userFilter='imports'}if(user?.role==='admin'&&!['users','requests','catalog-admin','manual-proposal'].includes(name))return;if(user?.role==='client'&&!['schedule','catalog','catalog-cartamac','catalog-thirdparty','quote','history'].includes(name))return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+name));document.querySelectorAll('.nav button[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===(name.startsWith('catalog-')?'catalog':name)));if(name==='catalog-cartamac')showCatalogStageChooser();if(name==='quote')renderQuote();if(name==='history'){renderClientHistory();refreshClientHistory()}if(name==='schedule')renderOrders();if(name==='users')renderUsers();if(name==='requests')renderRequests();if(name==='catalog-admin')renderCatalogAdmin();if(name==='manual-proposal')renderManualProposal();window.scrollTo(0,0)}
   document.querySelectorAll('[data-page],[data-go]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.page==='requests')selectedQuoteClient=null;page(btn.dataset.page||btn.dataset.go)}));
   function enter(account){user=account;document.body.classList.remove('role-admin','role-client');document.body.classList.add('role-'+account.role);$('signedUser').textContent=account.company||account.name;$('loginScreen').classList.add('hidden');hidePreview();pendingThirdParty=null;thirdMessage='';$('thirdResultBlock').classList.add('hidden');$('thirdPartyForm').reset();$('thirdFilesList').innerHTML='';$('contactName').value='';$('company').value=account.company||'';$('email').value='';$('phone').value='';$('thirdContactName').value='';$('thirdCompany').value=account.company||'';loadCart();renderCatalog();page(account.role==='admin'?'users':'schedule')}
   $('loginForm').addEventListener('submit',async ev=>{ev.preventDefault();$('loginError').textContent='Entrando...';try{await signInWithEmailAndPassword(auth,$('loginEmail').value.trim(),$('loginPassword').value)}catch(error){console.error(error);$('loginError').textContent='Não foi possível entrar. Confira o e-mail e a senha.'}});
@@ -733,7 +756,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   $('linkedUserOrders').addEventListener('click',async ev=>{const order=db.orders.find(o=>o.id===Number(ev.target.dataset.unlinkUserOrder)),clientId=Number($('userId').value);if(!order||!clientId)return;const before=structuredClone(db);setOrderClientIds(order,orderClientIds(order).filter(id=>id!==clientId));order.updatedAt=new Date().toISOString();if(!await persist()){db=before;renderUsers();return}renderUsers();notify('Pedido desvinculado deste cliente')});
   $('userFilesList').addEventListener('click',async ev=>{const download=ev.target.closest('[data-admin-download]'),remove=ev.target.closest('[data-delete-file]');if(download){downloadAttachment(Number(download.dataset.adminDownload),Number(download.dataset.index));return}if(!remove)return;const id=Number(remove.dataset.deleteFile),index=Number(remove.dataset.index),file=db.attachments?.[id]?.[index];if(!file||!confirm(`Excluir ${file.name}?`))return;const before=structuredClone(db);db.attachments[id].splice(index,1);if(!await persist()){db=before;return}renderUserLinks();notify('Arquivo excluído')});
   function renderAdminOrders(){if(user?.role!=='admin')return;const orders=db.orders.filter(o=>!o.completed&&Number(o.progress||0)<100);$('openOrdersCount').textContent=`(${orders.length})`;$('ordersAdminList').innerHTML=orders.length?orders.map(o=>{const clients=orderClientIds(o).map(id=>db.users.find(u=>u.id===id)).filter(Boolean),clientLabel=clients.map(client=>client.company||client.name).join(', ')||'Não vinculado';return `<div class="admin-item"><div><b>${esc(o.code)} · ${esc(o.name)}</b><small>${esc(o.op?'OP: '+o.op+' · ':'')}${esc(clientLabel)} · ${o.progress}% · ${esc(o.status)} · ${(o.stages||[]).reduce((n,s)=>n+(s.tasks?.length||0),0)} tarefa(s)</small></div></div>`}).join(''):'<div class="empty">Nenhum pedido em aberto.</div>'}
-  function quoteCompanyName(q){
+  function quoteCompanyName(q){if(q.manual)return String(q.company||'').trim()||'Empresa não informada';
     const registered=db.users.find(account=>account.id===q.clientId)?.company;
     return String(registered||q.company||'').trim()||'Empresa não informada';
   }
@@ -787,7 +810,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     link.href=url;link.download=`Solicitacao_Cartamac_${String(q.id).replace(/[^a-zA-Z0-9_-]/g,'_')}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),10000);notify('JSON da solicitação exportado. Anexos devem ser baixados separadamente.');
   }
   // Rascunho comercial local: nunca persiste custos, índices ou o JSON importado.
-  let proposalRequestId=null,proposalBudgetData=null;
+  let proposalRequestId=null,proposalBudgetData=null,manualProposalRequest=null;
   const proposalMoney=value=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(value);
   const proposalCents=value=>Math.round((value+Number.EPSILON)*100);
   function calculateProposalBudget(data){
@@ -926,7 +949,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function proposalExclusions(){return `<section class="proposal-sheet proposal-standard">${proposalLogo()}<h3>3. EXCLUSÕES</h3><ul><li>Movimentação dos equipamentos.</li><li>Montagem no cliente e descarga.</li><li>Peças reservas não descritas nesta proposta.</li><li>Transporte e levantamento em campo.</li><li>Quaisquer itens não descritos nesta proposta.</li></ul></section>`}
   function proposalFinalStandards(){return `<section class="proposal-sheet proposal-standard proposal-final-standards">${proposalLogo()}<h3>5. TRANSPORTE</h3><p>Pagador do frete: contratação por conta do destinatário (FOB). Transportadora a definir.</p><p>Toda a logística é de responsabilidade do cliente. Eventuais avarias no transporte e manuseio deverão ser avaliadas antes da instalação e do início de operação.</p><h3>6. ACONDICIONAMENTO E ESTOCAGEM NO CLIENTE</h3><p>Os equipamentos devem ser armazenados em local livre de acúmulo de poeira e água, sem contato direto com o solo. Equipamentos com partes giratórias devem seguir as recomendações de conservação até o início de operação.</p><h3>7. EMBALAGEM</h3><p>As embalagens necessárias ao transporte dos equipamentos incluídos nesta proposta estão contempladas no fornecimento.</p><h3>8. GARANTIAS</h3><p>A CARTAMAC considera garantia de 12 meses a partir da emissão da Nota Fiscal para defeitos de material e mão de obra, observadas as recomendações do manual de operação e manutenção. Componentes comerciais seguem análise dos respectivos fornecedores.</p><p>Sendo o que se apresenta no momento, colocamo-nos à disposição para esclarecimentos.</p></section>`}
   function renderProposalBudget(data){
-    const request=db.quotes.find(q=>String(q.id)===proposalRequestId),budget=calculateProposalBudget(data);
+    const request=manualProposalRequest?.id===proposalRequestId?manualProposalRequest:db.quotes.find(q=>String(q.id)===proposalRequestId),budget=calculateProposalBudget(data);
     if(!request||request.type==='third-party')throw Error('Solicitação de peças Cartamac não encontrada.');
     const delivery=$('proposalDelivery').value.trim(),payment=$('proposalPayment').value.trim();
     const coverValues=proposalCoverValues(),coverReady=!!(coverValues.company&&coverValues.address&&coverValues.city&&coverValues.contact&&coverValues.email&&coverValues.phone&&coverValues.equipment);
@@ -980,12 +1003,12 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   }
   function openProposalBuilder(id){
     if(user?.role!=='admin')return;
-    const request=db.quotes.find(q=>String(q.id)===String(id));if(!request||request.type==='third-party')return;
+    const request=manualProposalRequest?.id===String(id)?manualProposalRequest:db.quotes.find(q=>String(q.id)===String(id));if(!request||request.type==='third-party')return;
     proposalRequestId=String(id);proposalBudgetData=null;$('proposalBudgetFile').value='';$('proposalDelivery').value='';$('proposalPayment').value='';
-    const client=db.users.find(account=>account.id===request.clientId||account.uid===request.clientUid);
-    const cover={proposalCompany:client?.company||request.company||'',proposalAddress:client?.addressLine||request.addressLine||'',proposalCity:client?.cityState||request.cityState||'',proposalCompanyPhone:client?.companyPhone||request.companyPhone||request.phone||'',proposalContact:request.contactName||'',proposalContactEmail:request.email||'',proposalContactPhone:request.phone||'',proposalReference:`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id}`,proposalEquipmentTitle:[...new Set((request.items||[]).map(item=>item.equipmentName||catalog[item.equipment]?.equipment).filter(Boolean))].join(' / ').slice(0,240)};
+    const client=request.manual?null:db.users.find(account=>account.id===request.clientId||account.uid===request.clientUid);
+    const cover={proposalCompany:client?.company||request.company||'',proposalAddress:client?.addressLine||request.addressLine||'',proposalCity:client?.cityState||request.cityState||'',proposalCompanyPhone:client?.companyPhone||request.companyPhone||request.phone||'',proposalContact:request.contactName||'',proposalContactEmail:request.email||'',proposalContactPhone:request.phone||'',proposalReference:request.manual?request.reference||'Proposta avulsa':`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id}`,proposalEquipmentTitle:[...new Set((request.items||[]).map(item=>item.equipmentName||catalog[item.equipment]?.equipment).filter(Boolean))].join(' / ').slice(0,240)};
     for(const [field,value] of Object.entries(cover))$(field).value=value;
-    $('proposalBuilderPreview').replaceChildren();$('downloadProposalDraft').disabled=true;$('proposalBuilderSubtitle').textContent=`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id} · ${quoteCompanyName(request)}`;$('proposalBuilderMessage').textContent='Selecione o orçamento editável e confira os dados da capa, prazo e pagamento.';$('proposalBuilder').showModal();
+    $('proposalBuilderPreview').replaceChildren();$('downloadProposalDraft').disabled=true;$('proposalBuilderSubtitle').textContent=request.manual?`Proposta avulsa · ${quoteCompanyName(request)}`:`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id} · ${quoteCompanyName(request)}`;$('proposalBuilderMessage').textContent='Selecione o orçamento editável e confira os dados da capa, prazo e pagamento.';$('proposalBuilder').showModal();
   }
   function closeProposalBuilder(){proposalRequestId=null;proposalBudgetData=null;$('proposalBudgetFile').value='';$('proposalDelivery').value='';$('proposalPayment').value='';for(const id of ['proposalCompany','proposalAddress','proposalCity','proposalCompanyPhone','proposalContact','proposalContactEmail','proposalContactPhone','proposalReference','proposalEquipmentTitle'])$(id).value='';$('proposalBuilderPreview').replaceChildren();$('downloadProposalDraft').disabled=true;if($('proposalBuilder').open)$('proposalBuilder').close()}
   function renderRequests(){
@@ -1012,6 +1035,55 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
       if(request?.type!=='third-party')button.insertAdjacentHTML('afterend',`<button type="button" class="btn" data-build-proposal="${esc(request.id)}">FAZER PROPOSTA</button>`);
     });
   }
+  // Proposta avulsa: usa o catálogo atual sem criar solicitação no Firebase.
+  let manualProposalItems=[];
+  function renderManualProposal(){
+    if(user?.role!=='admin')return;
+    const equipment=$('manualEquipment'),selected=equipment.value;
+    equipment.innerHTML='<option value="">Selecione o equipamento</option>'+catalog.map((entry,e)=>activeEquipment(e)?'<option value="'+e+'">'+esc(entry.equipment)+'</option>':'').join('');
+    if(activeEquipment(selected))equipment.value=selected;
+    manualProposalEquipmentChanged();manualProposalRenderItems();
+  }
+  function manualProposalEquipmentChanged(){
+    const equipment=$('manualEquipment').value,part=$('manualPart'),selected=part.value;
+    part.innerHTML='<option value="">Selecione a peça</option>'+(activeEquipment(equipment)?visibleParts(Number(equipment)).filter(({p})=>canQuote(equipment,p)).map(({part,p})=>'<option value="'+p+'">'+esc(part)+' · '+esc(drawingCode(equipment,p))+'</option>').join(''):'');
+    if(activePart(equipment,selected))part.value=selected;
+    manualProposalPartChanged();
+  }
+  function manualProposalPartChanged(){
+    const e=Number($('manualEquipment').value),p=Number($('manualPart').value),root=$('manualPartPreview');
+    if(!canQuote($('manualEquipment').value,$('manualPart').value)){root.replaceChildren();return}
+    const detail=db.partDetails?.[itemKey(e,p)]||{},photo=photoUrl('part',itemKey(e,p));
+    root.innerHTML=(photo?'<img src="'+esc(photo)+'" alt="Foto da peça selecionada">':'')+'<div><strong>'+esc(catalog[e].parts[p])+'</strong><p>Desenho '+esc(drawingCode(e,p))+'</p><p>'+esc(detail.description||'Descrição técnica ainda não cadastrada.')+'</p></div>';
+    $('manualSpecification').required=!!detail.allowSpecification;
+    $('manualSpecification').placeholder=detail.allowSpecification?String(detail.specificationPrompt||'Informe a especificação desta peça'):'Opcional: medida, furo ou característica';
+  }
+  function manualProposalRenderItems(){
+    $('manualItems').innerHTML=manualProposalItems.length?manualProposalItems.map((item,index)=>'<div class="manual-item"><div><b>'+esc(partLabel(item.partName,item.specification))+'</b><small>'+esc(item.equipmentName)+' · '+esc(item.drawingCode)+' · Qtd. '+item.quantity+'</small></div><button type="button" class="btn secondary" data-manual-remove="'+index+'">Retirar</button></div>').join(''):'<p class="small-note">Nenhuma peça adicionada.</p>';
+  }
+  function manualProposalAdd(){
+    if(user?.role!=='admin')return;
+    const e=Number($('manualEquipment').value),p=Number($('manualPart').value),quantity=Number($('manualQuantity').value),specification=$('manualSpecification').value.trim(),detail=db.partDetails?.[itemKey(e,p)]||{};
+    if(!canQuote($('manualEquipment').value,$('manualPart').value)){notify('Selecione uma peça cadastrada com código de desenho.');return}
+    if(!Number.isSafeInteger(quantity)||quantity<1||quantity>100000){notify('Informe uma quantidade válida.');return}
+    if(detail.allowSpecification&&!specification){notify('Informe a especificação obrigatória desta peça.');return}
+    manualProposalItems.push({stage:stageFor(catalog[e].category),equipment:e,part:p,equipmentName:catalog[e].equipment,partName:catalog[e].parts[p],drawingCode:drawingCode(e,p),quantity,specification});
+    $('manualQuantity').value='1';$('manualSpecification').value='';manualProposalRenderItems();notify('Peça adicionada à proposta.');
+  }
+  function manualProposalOpen(){
+    if(user?.role!=='admin')return;
+    if(!manualProposalItems.length){notify('Adicione ao menos uma peça à proposta.');return}
+    const read=id=>$(id).value.trim(),company=read('manualCompany'),contactName=read('manualContact'),email=read('manualEmail'),phone=read('manualPhone');
+    if(!company||!contactName||!email||!phone){notify('Preencha empresa, contato, e-mail e celular.');return}
+    if(!$('manualEmail').checkValidity()){notify('Informe um e-mail válido.');return}
+    manualProposalRequest={id:'manual-'+Date.now(),manual:true,type:'cartamac',createdAt:new Date().toISOString(),company,contactName,email,phone,addressLine:read('manualAddress'),cityState:read('manualCity'),companyPhone:read('manualCompanyPhone'),reference:read('manualReference'),items:structuredClone(manualProposalItems)};
+    openProposalBuilder(manualProposalRequest.id);
+  }
+  $('manualEquipment').addEventListener('change',manualProposalEquipmentChanged);
+  $('manualPart').addEventListener('change',manualProposalPartChanged);
+  $('manualAddPart').addEventListener('click',manualProposalAdd);
+  $('manualItems').addEventListener('click',event=>{const button=event.target.closest('[data-manual-remove]');if(!button)return;manualProposalItems.splice(Number(button.dataset.manualRemove),1);manualProposalRenderItems()});
+  $('manualOpenProposal').addEventListener('click',manualProposalOpen);
   $('requestsList').addEventListener('click',event=>{const button=event.target.closest('[data-build-proposal]');if(button)openProposalBuilder(button.dataset.buildProposal)});
   $('proposalBudgetFile').insertAdjacentHTML('afterend','<button id="downloadProposalDraft" class="btn secondary" type="button" disabled>Baixar proposta HTML</button>');
   $('downloadProposalDraft').addEventListener('click',async()=>{
@@ -1050,6 +1122,9 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   document.querySelector('#page-catalog-admin .notice').textContent='Cadastros, descrições e fotos são compartilhados pelo Firebase. Cada foto é compactada e salva separadamente. Confira a imagem antes de usar na proposta.';
   onAuthStateChanged(auth,async authenticated=>{
     closeProposalBuilder();
+    manualProposalRequest=null;manualProposalItems=[];
+    for(const field of document.querySelectorAll('#page-manual-proposal input'))if(field.id!=='manualQuantity')field.value='';
+    $('manualQuantity').value='1';
     user=null;firebaseUser=authenticated;cart={};cartSpecs={};db=emptyDb();savedDb=null;
     document.body.classList.remove('role-admin','role-client');$('loginScreen').classList.remove('hidden');$('loginPassword').value='';
     if(!authenticated){$('loginError').textContent='';return}
