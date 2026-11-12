@@ -870,23 +870,29 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     const indexes=numbers(data.equipmentIndexes,5,'Índices de equipamento'),taxRates=numbers(data.taxes,5,'Alíquotas');
     const discount=Number(data.discount),ipi=Number(data.ipi);
     if(!Number.isFinite(discount)||discount<0||discount>=100||!Number.isFinite(ipi)||ipi<0||ipi>100)throw Error('Desconto ou IPI inválido no JSON.');
+    // A base, o IPI e o desconto seguem a Formação de preço: o IPI incide antes da reserva para desconto.
     const denominator=1-(indexes.reduce((a,b)=>a+b,0)+taxRates.reduce((a,b)=>a+b,0))/100;
     if(denominator<=0)throw Error('A soma dos índices e impostos não pode alcançar 100%.');
-    const items=data.items.map((item,index)=>{
+    const rawItems=data.items.map((item,index)=>{
       const cost=Number(item.unitCost),quantity=Number(item.quantity),code=String(item.code||'').trim().toUpperCase();
       if(!code||!Number.isFinite(cost)||cost<0||!Number.isSafeInteger(quantity)||quantity<1||quantity>100000)throw Error(`Item ${index+1}: código, custo ou quantidade inválidos.`);
-      const unitCents=proposalCents(cost/denominator*(1+ipi/100)/(1-discount/100));
-      return {code,name:String(item.equipment||item.code||'').trim(),quantity,unitCents,totalCents:unitCents*quantity};
+      const rawUnitPrice=cost/denominator*(1+ipi/100)/(1-discount/100);
+      return {code,name:String(item.equipment||item.code||'').trim(),quantity,unitCents:proposalCents(rawUnitPrice),totalCents:proposalCents(rawUnitPrice*quantity),cost};
     });
-    const targetCents=proposalCents(items.reduce((sum,item,index)=>sum+Number(data.items[index].unitCost)*item.quantity,0)/denominator*(1+ipi/100)/(1-discount/100));
-    const roundedCents=items.reduce((sum,item)=>sum+item.totalCents,0),difference=targetCents-roundedCents;
-    const single=items.find(item=>item.quantity===1&&item.unitCents+difference>=0);
-    if(single&&difference){single.unitCents+=difference;single.totalCents+=difference}
-    const totalCents=items.reduce((sum,item)=>sum+item.totalCents,0);
+    const totalCost=rawItems.reduce((sum,item)=>sum+item.cost*item.quantity,0);
+    const priceBeforeIpi=totalCost/denominator;
+    const ipiValue=priceBeforeIpi*ipi/100;
+    const finalPrice=(priceBeforeIpi+ipiValue)/(1-discount/100);
+    const totalCents=proposalCents(finalPrice),beforeIpiCents=proposalCents(priceBeforeIpi),ipiCents=proposalCents(ipiValue);
     if(!Number.isSafeInteger(totalCents))throw Error('Total acima do limite numérico seguro.');
-    const beforeIpiCents=proposalCents((totalCents/100)/(1+ipi/100));
-    const taxes=taxRates.map((rate,index)=>({name:['PIS','COFINS','CSLL','IRPJ','ICMS'][index],rate,cents:proposalCents(beforeIpiCents/100*rate/100)}));
-    return {items,totalCents,beforeIpiCents,ipiCents:totalCents-beforeIpiCents,taxes,netCents:beforeIpiCents-taxes.reduce((sum,tax)=>sum+tax.cents,0),discount,roundingDifference:targetCents-totalCents};
+    // Total da planilha tem precedência sobre a soma de preços unitários já arredondados.
+    const items=rawItems.map(({cost,...item})=>item);
+    const roundedCents=items.reduce((sum,item)=>sum+item.totalCents,0),difference=totalCents-roundedCents;
+    if(difference){const index=items.findIndex(item=>item.quantity===1&&item.unitCents+difference>=0);
+      if(index>=0){items[index].unitCents+=difference;items[index].totalCents+=difference}
+      else{const largest=items.reduce((best,item,index)=>item.totalCents>items[best].totalCents?index:best,0);items[largest].totalCents+=difference}}
+    const taxes=taxRates.map((rate,index)=>({name:['PIS','COFINS','CSLL','IRPJ','ICMS'][index],rate,cents:proposalCents(priceBeforeIpi*rate/100)}));
+    return {items,totalCents,beforeIpiCents,ipiCents,taxes,netCents:proposalCents(finalPrice/(1+ipi/100)*(1-taxRates.reduce((sum,rate)=>sum+rate,0)/100)),discount,roundingDifference:0};
   }
   function proposalCatalogMatch(code){
     const matches=[];
@@ -1018,7 +1024,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     });
   }
   function proposalExclusions(){return `<section class="proposal-sheet proposal-standard">${proposalLogo()}<h3>3. EXCLUSÕES</h3><ul><li>Movimentação dos equipamentos.</li><li>Montagem no cliente e descarga.</li><li>Peças reservas não descritas nesta proposta.</li><li>Transporte e levantamento em campo.</li><li>Quaisquer itens não descritos nesta proposta.</li></ul></section>`}
-  function proposalFinalStandards(){return `<section class="proposal-sheet proposal-standard proposal-final-standards">${proposalLogo()}<h3>5. &nbsp;&nbsp; TRANSPORTE</h3><table class="proposal-transport-table"><tbody><tr><td>Pagador do frete</td><td>1 - Contratação do frete por conta do destinatário (FOB)</td></tr><tr><td>Transportadora</td><td>A definir</td></tr><tr><td>Quantidade de volumes</td><td>1</td></tr></tbody></table><p>Nota: Toda a logística é de responsabilidade do cliente. Os equipamentos que sofrerem alguma avaria no transporte e manuseio deverão ser corrigidos ou substituídos antes da instalação no local e do start-up.</p><h3>6. &nbsp;&nbsp; ACONDICIONAMENTO E ESTOCAGEM NO CLIENTE</h3><p>Os equipamentos devem ser acondicionados e estocados em local livre de acúmulo de poeira e água, evitando contato direto com o solo. As partes giratórias com mancais e rolamentos deverão ser lubrificadas e giradas a cada 10 dias até o start-up.</p><h3>7. &nbsp;&nbsp; EMBALAGEM</h3><p>Estão inclusas em nosso fornecimento todas as embalagens de madeira para o transporte dos equipamentos envolvidos nesta proposta.</p><h3>8. &nbsp;&nbsp; GARANTIAS</h3><p>A CARTAMAC considera garantia de 12 (doze) meses a partir da emissão da Nota Fiscal. A garantia se estende contra defeitos de material e mão de obra, desde que sejam seguidas as recomendações do manual de operação e manutenção do equipamento.</p><p>Para itens comerciais, como motores, motoredutores, rolamentos, mancais e selos mecânicos, a garantia depende de análise dos respectivos fornecedores. Caso não seja constatado defeito de fabricação e o fornecedor não aprove a garantia, a CARTAMAC não se responsabiliza por esses itens.</p><p class="proposal-closing">Sendo o que se apresenta no momento, colocamo-nos à disposição para quaisquer outros esclarecimentos que se fizerem necessários.</p></section>`}
+  function proposalFinalStandards(){return `<section class="proposal-sheet proposal-standard proposal-final-standards">${proposalLogo()}<h3>5. &nbsp;&nbsp; TRANSPORTE</h3><table class="proposal-transport-table"><tbody><tr><td>Pagador do frete</td><td>1 - Contratação do frete por conta do destinatário (FOB)</td></tr><tr><td>Transportadora</td><td>A definir</td></tr></tbody></table><p>Nota: Toda a logística é de responsabilidade do cliente. Os equipamentos que sofrerem alguma avaria no transporte e manuseio deverão ser corrigidos ou substituídos antes da instalação no local e do start-up.</p><h3>6. &nbsp;&nbsp; ACONDICIONAMENTO E ESTOCAGEM NO CLIENTE</h3><p>Os equipamentos devem ser acondicionados e estocados em local livre de acúmulo de poeira e água, evitando contato direto com o solo. As partes giratórias com mancais e rolamentos deverão ser lubrificadas e giradas a cada 10 dias até o start-up.</p><h3>7. &nbsp;&nbsp; EMBALAGEM</h3><p>Estão inclusas em nosso fornecimento todas as embalagens de madeira para o transporte dos equipamentos envolvidos nesta proposta.</p><h3>8. &nbsp;&nbsp; GARANTIAS</h3><p>A CARTAMAC considera garantia de 12 (doze) meses a partir da emissão da Nota Fiscal. A garantia se estende contra defeitos de material e mão de obra, desde que sejam seguidas as recomendações do manual de operação e manutenção do equipamento.</p><p>Para itens comerciais, como motores, motoredutores, rolamentos, mancais e selos mecânicos, a garantia depende de análise dos respectivos fornecedores. Caso não seja constatado defeito de fabricação e o fornecedor não aprove a garantia, a CARTAMAC não se responsabiliza por esses itens.</p><p class="proposal-closing">Sendo o que se apresenta no momento, colocamo-nos à disposição para quaisquer outros esclarecimentos que se fizerem necessários.</p></section>`}
   function renderProposalBudget(data){
     const request=manualProposalRequest?.id===proposalRequestId?manualProposalRequest:db.quotes.find(q=>String(q.id)===proposalRequestId),budget=calculateProposalBudget(data);
     if(!request||request.type==='third-party')throw Error('Solicitação de peças Cartamac não encontrada.');
@@ -1034,7 +1040,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
       const match=requested?proposalRequestMatch(requested):proposalCatalogMatch(item.code);
       if(!match)missingCatalog.push(item.code);
       const part=match?catalog[match.e].parts[match.p]:item.name;
-      return `<tr><td>2.${index+1}.</td><td>${esc(partLabel(part,requested?.specification))}<small class="proposal-item-code">${esc(item.code)}</small></td><td class="num">${String(item.quantity).padStart(2,"0")}</td><td class="num">${proposalMoney(item.unitCents/100)}</td><td class="num">${proposalMoney(item.totalCents/100)}</td></tr>`;
+      return `<tr><td>4.${index+1}.</td><td>${esc(partLabel(part,requested?.specification))}<small class="proposal-item-code">${esc(item.code)}</small></td><td class="num">${String(item.quantity).padStart(2,"0")}</td><td class="num">${proposalMoney(item.unitCents/100)}</td><td class="num">${proposalMoney(item.totalCents/100)}</td></tr>`;
     }).join('');
     const available=new Map(budgetItems);
     for(const item of request.items||[]){
@@ -1057,15 +1063,14 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
       <h3>4. &nbsp;&nbsp; PROPOSTA COMERCIAL</h3>
       <div class="table-scroll"><table class="proposal-values"><colgroup><col><col><col><col><col></colgroup><thead><tr><th>Item</th><th>Descrição</th><th class="num">QTD</th><th class="num">Valor (R$)<br>Unitário</th><th class="num">Valor (R$)<br>Total</th></tr></thead><tbody>${rows}</tbody></table></div>
       <table class="proposal-totals"><tbody>
-        <tr><td>Valor total sem impostos (A)</td><td class="num">${proposalMoney(budget.netCents/100)}</td></tr>
-        <tr><td>Valor total dos produtos com impostos s/ IPI (B)</td><td class="num">${proposalMoney(budget.beforeIpiCents/100)}</td></tr>
-        <tr><td>Valor total do IPI (C)</td><td class="num">${proposalMoney(budget.ipiCents/100)}</td></tr>
-        <tr class="grand-total"><td>Valor total com todos os impostos (D)</td><td class="num">${proposalMoney(budget.totalCents/100)}</td></tr>
+        <tr><td>Valor total dos produtos com impostos s/ IPI (A)</td><td class="num">${proposalMoney(budget.beforeIpiCents/100)}</td></tr>
+        <tr><td>Valor total do IPI (B)</td><td class="num">${proposalMoney(budget.ipiCents/100)}</td></tr>
+        <tr class="grand-total"><td>Valor total com todos os impostos (C)</td><td class="num">${proposalMoney(budget.totalCents/100)}</td></tr>
       </tbody></table>
       ${delivery?`<p class="proposal-delivery">Prazo de entrega ${esc(delivery)}</p>`:''}
       <h4>IMPOSTOS</h4>
        <p class="proposal-tax-intro">A Empresa CARTAMAC é optante pelo regime fiscal de lucro presumido, e nos dados acima nossos preços estão apresentados das seguintes formas:</p>
-      <div class="proposal-value-legend"><div><b>DADOS (A)</b><span>Excluso PIS, COFINS, IR, CSLL, ICMS e IPI</span></div><div><b>DADOS (B)</b><span>Incluso PIS, COFINS, IR, CSLL e ICMS; exclusivo IPI</span></div><div><b>DADOS (C)</b><span>Valor destacado do IPI</span></div><div><b>DADOS (D)</b><span>Incluso PIS, COFINS, IR, CSLL, ICMS e IPI</span></div></div>
+      <div class="proposal-value-legend"><div><b>DADOS (A)</b><span>Incluso PIS, COFINS, IR, CSLL e ICMS; exclusivo IPI</span></div><div><b>DADOS (B)</b><span>Valor destacado do IPI</span></div><div><b>DADOS (C)</b><span>Incluso PIS, COFINS, IR, CSLL, ICMS e IPI</span></div></div>
       <div class="table-scroll"><table class="proposal-taxes"><thead><tr><th colspan="8">TABELA DE IMPOSTOS</th></tr><tr><td>ICMS</td><td>IRPJ</td><td>CSLL</td><td>PIS</td><td>COFINS</td><td>TOTAL</td><td>DIVISOR</td><td>IPI</td></tr></thead><tbody><tr><td>${rate('ICMS')}</td><td>${rate('IRPJ')}</td><td>${rate('CSLL')}</td><td>${rate('PIS')}</td><td>${rate('COFINS')}</td><td>${taxTotal.toLocaleString('pt-BR',{maximumFractionDigits:2})}%</td><td>${divisor.toLocaleString('pt-BR',{minimumFractionDigits:4,maximumFractionDigits:4})}</td><td>${Number(data.ipi).toLocaleString('pt-BR',{maximumFractionDigits:2})}%</td></tr></tbody></table></div>
       <h4>COBRANÇA</h4><div class="proposal-payment"><div class="proposal-payment-label">DADOS DE COBRANÇA:</div><div class="proposal-payment-text">${esc(payment).replace(/\r?\n/g,"<br>")}</div></div><table class="proposal-bank-table"><tbody><tr><td>Banco</td><td>085 - COOP CENTRAL AILOS - CREDICREA</td></tr><tr><td>Agência</td><td>0106-6</td></tr><tr><td>Conta corrente</td><td>31741-1</td></tr><tr><td>Fone</td><td>(47) 3525-5505</td></tr><tr><td>PIX</td><td>36.417.759/0001-11</td></tr><tr><td>Empresa</td><td>CARTAMAC IND. E COMÉRCIO DE MÁQUINAS INDUSTRIAIS LTDA</td></tr><tr><td>Estado</td><td>SANTA CATARINA</td></tr><tr><td>CNPJ</td><td>36.417.759/0001-11</td></tr><tr><td>E-mail</td><td>financeiro@cartamac.com.br</td></tr></tbody></table>
     </section>${proposalFinalStandards()}</div>`;
