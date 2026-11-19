@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="icon" type="image/png" href="./cartamac-favicon.png">
-<title>CARTAMAC | Portal do Cliente | rev022</title>
+<title>CARTAMAC | Portal do Cliente | rev026</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     :root{--bg:#0d0d0d;--bg2:#121212;--bg3:#1a1a1a;--bg4:#222;--border:#2a2a2a;--border2:#383838;--text:#ececec;--muted:#999;--gold:#c8a84b;--green:#5cb85c;--red:#e05252;--radius:10px}
@@ -268,7 +268,70 @@
     .proposal-document .proposal-final-standards>h3{margin:3mm 0 3mm}
     .proposal-document .proposal-final-standards>p{margin:2mm 0 3mm;text-indent:8mm}
     .proposal-document .proposal-final-standards .proposal-closing{margin-top:5mm}
-</style>
+
+    #page-users .user-detail-form{padding:24px;align-self:start}
+    #page-users .user-detail-form>h2{margin:0 0 5px}
+    #page-users #userAdminNameGroup[hidden],#page-users #userBusinessFields[hidden],#page-users #userContactsSection[hidden]{display:none!important}
+    #page-users .user-form-intro{margin:0 0 22px;color:var(--muted);font-size:12px;line-height:1.5}
+    #page-users .user-register-section{padding:20px 0;border-top:1px solid var(--border)}
+    #page-users .user-register-section h3{margin:0 0 6px;color:var(--text);font-size:16px}
+    #page-users .user-register-section>p{margin:0 0 16px;color:var(--muted);font-size:12px;line-height:1.5}
+    #page-users .user-register-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+    #page-users .user-register-grid .form-group{margin:0;min-width:0}
+    #page-users .user-register-grid .wide{grid-column:1/-1}
+    #page-users .user-contact-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+    #page-users .user-contact-head h3{margin:0}
+    #page-users .user-contact-list{display:grid;gap:10px;margin:12px 0}
+    #page-users .user-contact-row{display:grid;grid-template-columns:1fr 1.3fr 1fr auto;gap:10px;align-items:end;padding:14px;border:1px solid var(--border2);border-radius:8px;background:var(--bg2)}
+    #page-users .user-contact-row .form-group{margin:0;min-width:0}
+    #page-users .user-contact-row .field{width:100%}
+    #page-users .user-contact-row .btn{min-height:42px}
+    #page-users .user-form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-top:20px;border-top:1px solid var(--border)}
+    @media(max-width:900px){#page-users .user-contact-row{grid-template-columns:repeat(2,minmax(0,1fr))}#page-users .user-contact-row .btn{justify-self:start}}
+    @media(max-width:600px){#page-users .user-register-grid,#page-users .user-contact-row{grid-template-columns:1fr}#page-users .user-register-grid .wide{grid-column:auto}#page-users .user-detail-form{padding:18px}}
+  
+    #page-users .user-client-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 4px;padding-bottom:15px;border-bottom:1px solid var(--border)}
+    #page-users .user-client-tabs[hidden],#page-users .user-tab-panel[hidden]{display:none!important}
+    #page-users .user-client-tabs button{min-height:42px;padding:9px 15px;border:1px solid var(--border2);border-radius:6px;background:var(--bg2);color:var(--text);font:700 13px Arial,sans-serif;cursor:pointer}
+    #page-users .user-client-tabs button.active{border-color:var(--gold);background:#2b2618;color:var(--gold)}
+    #page-users .user-client-tabs button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    #page-users .user-equipment-panel{padding:18px 0 4px}
+    #page-users .user-equipment-panel h3{margin:0 0 7px;font-size:16px}
+    #page-users .user-equipment-panel>p{margin:0 0 18px;color:var(--muted);font-size:12px;line-height:1.5}
+    #page-users .user-equipment-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+    #page-users .user-equipment-toolbar input{width:min(100%,380px)}
+    #page-users .user-equipment-toolbar span{color:var(--muted);font-size:12px}
+    #page-users .user-equipment-list{display:grid;gap:14px;margin-bottom:18px}
+    #page-users .user-equipment-group{border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--bg2)}
+    #page-users .user-equipment-group h4{display:flex;justify-content:space-between;gap:10px;margin:0;padding:12px 16px;border-bottom:1px solid var(--border2);font-size:13px;color:var(--gold)}
+    #page-users .user-equipment-group h4 small{color:var(--muted);font-size:11px}
+    #page-users .user-equipment-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px;padding:7px 14px}
+    #page-users .user-equipment-option{display:flex;align-items:center;gap:10px;min-width:0;padding:10px 4px;font-size:12px;cursor:pointer}
+    #page-users .user-equipment-option input{width:17px;height:17px;flex:none;accent-color:#c8a948}
+    #page-users .user-equipment-option span{overflow-wrap:anywhere}
+    #page-users .user-equipment-empty{padding:22px;border:1px dashed var(--border2);border-radius:8px;color:var(--muted);font-size:13px}
+    #page-users .user-equipment-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--border)}
+    #page-users .user-equipment-actions .small-note{margin:0}
+    @media(max-width:650px){#page-users .user-equipment-options{grid-template-columns:1fr}}
+  
+    #page-catalog-admin .catalog-order-panel{margin:0 0 18px;padding:22px}
+    #page-catalog-admin .catalog-order-panel h2{margin:0 0 6px;font-size:18px}
+    #page-catalog-admin .catalog-order-panel>p{margin:0 0 17px;color:var(--muted);font-size:12px;line-height:1.5}
+    #page-catalog-admin .catalog-order-sections{display:grid;gap:10px}
+    #page-catalog-admin .catalog-order-group{border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--bg2)}
+    #page-catalog-admin .catalog-order-group>summary{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 16px;cursor:pointer;color:var(--gold);font-size:13px;font-weight:800}
+    #page-catalog-admin .catalog-order-group>summary small{color:var(--muted);font-size:11px;font-weight:500}
+    #page-catalog-admin .catalog-order-items{padding:3px 15px 12px;border-top:1px solid var(--border2)}
+    #page-catalog-admin .catalog-order-item{display:grid;grid-template-columns:30px minmax(0,1fr) 104px;gap:12px;align-items:center;min-height:56px;padding:8px 2px;border-bottom:1px solid var(--border)}
+    #page-catalog-admin .catalog-order-item:last-child{border-bottom:0}
+    #page-catalog-admin .catalog-order-position{display:grid;place-items:center;width:27px;height:27px;border-radius:5px;background:#2b2618;color:var(--gold);font-size:12px;font-weight:800}
+    #page-catalog-admin .catalog-order-item strong{font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+    #page-catalog-admin .catalog-order-item label{font-size:10px;color:var(--muted)}
+    #page-catalog-admin .catalog-order-item select{width:100%;min-height:34px;margin-top:3px;padding:4px 6px}
+    #page-catalog-admin .catalog-order-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:0 16px 15px}
+    #page-catalog-admin .catalog-order-actions .small-note{margin:0}
+    @media(max-width:600px){#page-catalog-admin .catalog-order-item{grid-template-columns:26px minmax(0,1fr) 83px;gap:7px}#page-catalog-admin .catalog-order-panel{padding:16px}}
+  </style>
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
@@ -334,7 +397,29 @@
     </section>
     <section id="page-users" class="page admin-only" aria-label="Clientes e usuários">
       <div class="user-tabs"><button type="button" class="btn" data-user-filter="client"><svg class="tab-icon" aria-hidden="true"><use href="#icon-users"/></svg>Clientes</button><button type="button" class="btn secondary" data-user-filter="admin"><svg class="tab-icon" aria-hidden="true"><use href="#icon-admin"/></svg>Administradores</button><button type="button" class="btn secondary" data-user-filter="imports"><svg class="tab-icon" aria-hidden="true"><use href="#icon-calendar"/></svg>Importar cronograma</button></div>
-      <div id="usersManagement" class="user-admin-layout"><div class="panel user-list-panel"><div class="user-list-head"><h2 id="usersListTitle">Clientes</h2><button id="newUserBtn" class="btn" type="button">+ Novo</button></div><div class="user-list-search"><input id="userSearch" class="field" type="search" placeholder="Pesquisar cliente ou e-mail" aria-label="Pesquisar clientes"></div><div id="usersList"></div></div><form id="userForm" class="panel user-detail-form"><h2 id="userFormTitle">Novo cliente</h2><input id="userId" type="hidden"><input id="userRole" type="hidden" value="client"><div class="form-group"><label for="userName">Nome *</label><input id="userName" class="field" required></div><div class="form-group"><label for="userCompany">Empresa</label><input id="userCompany" class="field"></div><div class="form-group"><label for="userEmail">E-mail / login *</label><input id="userEmail" class="field" type="email" required></div><div class="form-group"><label for="userPassword">Senha</label><div class="password-row"><input id="userPassword" class="field" type="password" required><button id="toggleUserPassword" type="button" aria-label="Mostrar senha">◉</button></div><small class="small-note">Ao editar, deixe em branco para manter a senha.</small></div><div id="userOrdersBlock" class="user-section" style="display:none"><label>Pedidos ativos</label><div id="linkedUserOrders" style="margin:7px 0 10px"></div><select id="userOrderSelect" class="field"><option value="">+ Adicionar pedido...</option></select></div><div id="userFilesBlock" class="user-section" style="display:none"><label>Arquivos por equipamento</label><div id="userFilesList"></div></div><div class="quote-actions user-section"><button class="btn" type="submit">Salvar alterações</button><button id="deleteSelectedUser" class="btn secondary" type="button" style="display:none;color:var(--red)">Excluir cliente / acesso</button></div><p id="userMsg" class="small-note" role="status"></p></form></div>
+      <div id="usersManagement" class="user-admin-layout"><div class="panel user-list-panel"><div class="user-list-head"><h2 id="usersListTitle">Clientes</h2><button id="newUserBtn" class="btn" type="button">+ Novo</button></div><div class="user-list-search"><input id="userSearch" class="field" type="search" placeholder="Pesquisar cliente ou e-mail" aria-label="Pesquisar clientes"></div><div id="usersList"></div></div><form id="userForm" class="panel user-detail-form">
+  <h2 id="userFormTitle">Novo cliente</h2><p class="user-form-intro">Um acesso por empresa. Os contatos cadastrados serão exibidos na proposta.</p>
+  <input id="userId" type="hidden"><input id="userRole" type="hidden" value="client">
+  <nav id="userClientTabs" class="user-client-tabs" aria-label="Dados do cliente"><button type="button" data-user-tab="profile" class="active" aria-selected="true">Login e dados da proposta</button><button type="button" data-user-tab="equipment" aria-selected="false">Equipamentos</button></nav>
+  <div id="userProfilePanel" class="user-tab-panel">
+  <div id="userAdminNameGroup" class="form-group" hidden><label for="userName">Nome do administrador *</label><input id="userName" class="field" autocomplete="name"></div>
+  <section class="user-register-section"><h3>Login da empresa</h3><p>Este login é compartilhado pela empresa. Cada contato abaixo aparece separadamente na proposta.</p><div class="user-register-grid">
+    <div class="form-group"><label for="userEmail">E-mail / login *</label><input id="userEmail" class="field" type="email" autocomplete="username" required></div>
+    <div class="form-group"><label for="userPassword">Senha *</label><div class="password-row"><input id="userPassword" class="field" type="password" autocomplete="new-password" required><button id="toggleUserPassword" type="button" aria-label="Mostrar senha">◉</button></div><small class="small-note">Ao editar, a senha continua gerenciada pelo Firebase.</small></div>
+  </div></section>
+  <section id="userBusinessFields" class="user-register-section"><h3>Dados da empresa para a proposta</h3><p>Estas informações preenchem a capa quando esta empresa for selecionada.</p><div class="user-register-grid">
+    <div class="form-group wide"><label for="userCompany">Empresa *</label><input id="userCompany" class="field" autocomplete="organization" maxlength="180"></div>
+    <div class="form-group wide"><label for="userAddress">Endereço da empresa *</label><input id="userAddress" class="field" autocomplete="street-address" placeholder="Rua, número, complemento e bairro"></div>
+    <div class="form-group"><label for="userCity">Cidade / UF *</label><input id="userCity" class="field" placeholder="Ex.: Lontras - SC"></div>
+    <div class="form-group"><label for="userCompanyPhone">Telefone da empresa</label><input id="userCompanyPhone" class="field" type="tel" placeholder="Telefone geral da empresa"></div>
+  </div></section>
+  <section id="userContactsSection" class="user-register-section"><div class="user-contact-head"><h3>Contatos da proposta</h3><button id="addUserContact" class="btn secondary" type="button">+ Adicionar contato</button></div><p>Cadastre nome, e-mail e telefone de cada pessoa que deve constar na proposta.</p><div id="userContacts" class="user-contact-list"></div></section>
+  <div id="userOrdersBlock" class="user-section" style="display:none"><label>Pedidos ativos</label><div id="linkedUserOrders" style="margin:7px 0 10px"></div><select id="userOrderSelect" class="field"><option value="">+ Adicionar pedido...</option></select></div>
+  <div id="userFilesBlock" class="user-section" style="display:none"><label>Arquivos por equipamento</label><div id="userFilesList"></div></div>
+  <div class="user-form-actions"><button class="btn" type="submit">Salvar cliente</button><button id="deleteSelectedUser" class="btn secondary" type="button" style="display:none;color:var(--red)">Excluir cliente / acesso</button></div><p id="userMsg" class="small-note" role="status"></p>
+  </div>
+  <section id="userEquipmentPanel" class="user-tab-panel user-equipment-panel" hidden><h3>Equipamentos da empresa</h3><p id="userEquipmentHint">Salve primeiro o login e os dados da empresa. Depois escolha os equipamentos aqui.</p><div class="user-equipment-toolbar"><input id="userEquipmentSearch" class="field" type="search" placeholder="Buscar equipamento" aria-label="Buscar equipamento"><span id="userEquipmentCount"></span></div><div id="userEquipmentList" class="user-equipment-list"></div><div class="user-equipment-actions"><button id="userEquipmentSave" class="btn" type="button" disabled>Salvar equipamentos</button><p id="userEquipmentMessage" class="small-note" role="status"></p></div></section>
+</form></div>
       <div id="usersImports" class="hidden"><div class="panel admin-form" style="margin-bottom:18px"><h2>Importar arquivo Microsoft Project (.XML)</h2><p class="small-note">No Project: Arquivo → Salvar como → XML. Depois, vincule cada pedido ao cliente na subaba Clientes.</p><div class="quote-actions"><input id="projectXmlInput" class="field" type="file" accept=".xml,text/xml,application/xml" style="max-width:460px"><button id="importProjectBtn" class="btn" type="button">Importar cronograma</button></div><p id="projectImportMsg" class="small-note" role="status"></p></div><div class="panel admin-form"><h2>Pedidos em aberto <span id="openOrdersCount" class="muted"></span></h2><p class="small-note">Todos os pedidos ainda não concluídos. Para anexar um pedido, abra a ficha do cliente na subaba Clientes.</p><div id="ordersAdminList"></div></div></div>
     </section>
     <section id="page-requests" class="page admin-only">
@@ -362,6 +447,7 @@
         <form id="newEquipmentForm" class="catalog-admin-grid"><div class="form-group"><label for="newEquipmentName">Novo equipamento / grupo *</label><input id="newEquipmentName" class="field" required placeholder="Ex.: HIDRAPULPER MBC 44"></div><div class="form-group"><label for="newEquipmentCategory">Seção da tabela *</label><input id="newEquipmentCategory" class="field" list="catalogCategories" required placeholder="Ex.: Desagregação"><datalist id="catalogCategories"></datalist></div><button class="btn" type="submit">Cadastrar equipamento</button></form>
         <form id="newPartForm" class="catalog-admin-grid part-create"><div class="form-group"><label for="newPartTag">TAG</label><input id="newPartTag" class="field" placeholder="Ex.: HBD 17 - HBD 23"></div><div class="form-group"><label for="newPartDs">Código do desenho *</label><input id="newPartDs" class="field" required placeholder="Ex.: DS1003 ou MP15091"></div><div class="form-group"><label for="newPartName">Peça / desenho ref. *</label><input id="newPartName" class="field" required placeholder="Nome da peça"></div><div class="form-group"><label for="newPartEquipment">Pertence ao equipamento *</label><select id="newPartEquipment" class="field" required></select></div><button class="btn" type="submit">Cadastrar peça</button></form>
         <p id="catalogCreateMsg" class="small-note" role="status"></p></div>
+      <section class="panel admin-form catalog-order-panel"><h2>Ordem dos equipamentos</h2><p>Organize cada seção separadamente. Escolha a posição de um equipamento; os demais se ajustam automaticamente. Salve a ordem da seção para atualizar o catálogo dos clientes.</p><div id="catalogOrderSections" class="catalog-order-sections"></div></section>
       <div class="catalog-edit-grid"><div class="panel admin-form"><h2>Editar equipamento</h2><div class="form-group"><label for="editEquipmentSelect">Equipamento / grupo</label><select id="editEquipmentSelect" class="field"></select></div><div class="form-group"><label for="editEquipmentName">Nome do equipamento</label><input id="editEquipmentName" class="field"></div><div class="form-group"><label for="editEquipmentCategory">Seção da tabela</label><input id="editEquipmentCategory" class="field" list="catalogCategories"></div><div class="form-group"><label for="editEquipmentDescription">Descrição para o cliente</label><textarea id="editEquipmentDescription" class="field" placeholder="Explique o uso deste equipamento"></textarea></div><div class="form-group"><label for="editEquipmentPhoto">Foto do equipamento</label><input id="editEquipmentPhoto" class="field" type="file" accept="image/jpeg,image/png,image/webp"></div><div id="equipmentPhotoPreview" class="catalog-photo-preview"></div><div class="catalog-edit-actions"><button id="saveEquipmentDetails" class="btn" type="button">Salvar equipamento</button><button id="deleteEquipment" class="btn danger" type="button">Excluir equipamento</button></div></div>
       <div class="panel admin-form"><h2>Editar peça</h2><div class="form-group"><label for="editPartEquipment">Equipamento / grupo</label><select id="editPartEquipment" class="field"></select></div><div class="form-group"><label for="editPartSelect">Peça</label><select id="editPartSelect" class="field"></select></div><div class="form-group"><label for="editPartName">Nome da peça</label><input id="editPartName" class="field"></div><div class="form-grid"><div class="form-group"><label for="editPartTag">TAG</label><input id="editPartTag" class="field"></div><div class="form-group"><label for="editPartDs">Código do desenho *</label><input id="editPartDs" class="field" required></div></div><div class="form-group"><label for="editPartDescription">Descrição para o cliente</label><textarea id="editPartDescription" class="field" placeholder="Material, função, aplicação e detalhes importantes"></textarea></div><div class="form-group"><label for="editPartPhoto">Foto da peça</label><input id="editPartPhoto" class="field" type="file" accept="image/jpeg,image/png,image/webp"></div><div id="partPhotoPreview" class="catalog-photo-preview"></div><div class="catalog-edit-actions"><button id="savePartDetails" class="btn" type="button">Salvar peça</button><button id="deletePart" class="btn danger" type="button">Excluir peça</button></div></div></div>
       <p id="catalogEditMsg" class="small-note" role="status"></p>
@@ -415,7 +501,6 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   const legacyCatalogPartCounts=[7,2,4,6,4,4,4,4,4,4,7,0,0,6,3,3,3];
   const $=id=>document.getElementById(id);
   $('editPartDescription').closest('.form-group').insertAdjacentHTML('afterend','<div class="form-group"><label><input id="editPartSpecEnabled" type="checkbox"> Pedir especificação desta peça ao cliente</label><small>Use para variações como diâmetro do furo ou tipo de fenda.</small></div><div class="form-group"><label for="editPartSpecPrompt">Mensagem dentro do campo do cliente</label><input id="editPartSpecPrompt" class="field" maxlength="120" placeholder="Se vazio, usa a descrição da peça"></div>');
-  $('userCompany').closest('.form-group').insertAdjacentHTML('afterend','<div id="userBusinessFields" class="user-section"><h3>Dados da empresa para a proposta</h3><div class="form-group"><label for="userAddress">Endereço da empresa *</label><input id="userAddress" class="field" autocomplete="street-address" placeholder="Rua, número, complemento e bairro"></div><div class="form-group"><label for="userCity">Cidade / UF *</label><input id="userCity" class="field" placeholder="Ex.: Lontras - SC"></div><div class="form-group"><label for="userCompanyPhone">Telefone da empresa</label><input id="userCompanyPhone" class="field" type="tel" placeholder="Se diferente do contato"></div></div>');
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
   const firebaseConfig={apiKey:'AIzaSyCOJz8-rtyMvr4IPxXOHsJFgYvVYbE89YU',authDomain:'cartamac-portal-clientes.firebaseapp.com',projectId:'cartamac-portal-clientes',storageBucket:'cartamac-portal-clientes.firebasestorage.app',messagingSenderId:'833631408633',appId:'1:833631408633:web:c775200a09e9d7af4ded28'};
@@ -491,14 +576,14 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function activeEquipment(e){return e!==''&&e!==null&&e!==undefined&&Number.isInteger(Number(e))&&!!catalog[Number(e)]&&!catalog[Number(e)].archived}
   function activePart(e,p){return activeEquipment(e)&&p!==''&&p!==null&&p!==undefined&&Number.isInteger(Number(p))&&!!catalog[Number(e)].parts?.[Number(p)]&&!catalog[Number(e)].archivedParts?.[p]}
   function visibleParts(e){return (catalog[e]?.parts||[]).map((part,p)=>activePart(e,p)?{part,p}:null).filter(Boolean)}
-  function canQuote(e,p){return activePart(e,p)&&!!drawingCode(e,p)}
+  function canQuote(e,p){return activePart(e,p)&&clientHasEquipment(e)&&!!drawingCode(e,p)}
 
   let saveQueue=Promise.resolve();
   const persist=()=>{const snapshot=structuredClone(db);saveQueue=saveQueue.catch(()=>{}).then(async()=>{await writePortalChanges(savedDb,snapshot);savedDb=structuredClone(snapshot)});return saveQueue.then(()=>true,error=>{console.error(error);notify('Não foi possível salvar no Firebase. Confira sua conexão e permissões.');return false})};
   let user=null,cart={},cartSpecs={},message='',pendingRequest=null,selectedQuoteClient=null,pendingThirdParty=null,thirdMessage='';
   const notify=message=>{const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(el._timer);el._timer=setTimeout(()=>el.classList.remove('show'),3500)};
   const itemKey=(e,p)=>`${e}:${p}`;
-  function loadCart(){cart={};cartSpecs={};for(const [k,value] of Object.entries(db.carts?.[user?.id]||{})){const [e,p]=k.split(':').map(Number),q=typeof value==='number'?value:value?.quantity;if(!activePart(e,p)||!Number.isInteger(q)||q<1||q>9999)continue;cart[k]=q;if(db.partDetails?.[k]?.allowSpecification&&typeof value?.specification==='string')cartSpecs[k]=value.specification.slice(0,160)}updateCount()}
+  function loadCart(){cart={};cartSpecs={};for(const [k,value] of Object.entries(db.carts?.[user?.id]||{})){const [e,p]=k.split(':').map(Number),q=typeof value==='number'?value:value?.quantity;if(!activePart(e,p)||!clientHasEquipment(e)||!Number.isInteger(q)||q<1||q>9999)continue;cart[k]=q;if(db.partDetails?.[k]?.allowSpecification&&typeof value?.specification==='string')cartSpecs[k]=value.specification.slice(0,160)}updateCount()}
   function saveCart(){db.carts||={};db.carts[user.id]=Object.fromEntries(Object.entries(cart).map(([k,q])=>[k,cartSpecs[k]?{quantity:q,specification:cartSpecs[k]}:q]));persist();updateCount()}
   function partLabel(name,specification){return `${name}${specification?` - ${String(specification).trim()}`:''}`}
   function partSpecificationField(k,details){const prompt=String(details.specificationPrompt||details.description||'Ex.: furo Ø12mm, fenda 0,15mm').trim();return details.allowSpecification?`<label class="part-spec-field">Especificação desta peça *<input class="field" type="text" maxlength="160" data-part-spec="${k}" value="${esc(cartSpecs[k]||'')}" placeholder="${esc(prompt)}" aria-label="Especificação de ${esc(catalog[Number(k.split(':')[0])]?.parts[Number(k.split(':')[1])]||'peça')}"></label>`:''}
@@ -506,7 +591,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function hidePreview(){pendingRequest=null;$('resultBlock').style.display='none';$('sendStatus').textContent=''}
   function page(name){if(name==='manage-orders'){name='users';userFilter='imports'}if(user?.role==='admin'&&!['users','requests','catalog-admin','manual-proposal'].includes(name))return;if(user?.role==='client'&&!['schedule','catalog','catalog-cartamac','catalog-thirdparty','quote','history'].includes(name))return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+name));document.querySelectorAll('.nav button[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===(name.startsWith('catalog-')?'catalog':name)));if(name==='catalog-cartamac')showCatalogStageChooser();if(name==='quote')renderQuote();if(name==='history'){renderClientHistory();refreshClientHistory()}if(name==='schedule')renderOrders();if(name==='users')renderUsers();if(name==='requests')renderRequests();if(name==='catalog-admin')renderCatalogAdmin();if(name==='manual-proposal')renderManualProposal();window.scrollTo(0,0)}
   document.querySelectorAll('[data-page],[data-go]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.page==='requests')selectedQuoteClient=null;page(btn.dataset.page||btn.dataset.go)}));
-  function enter(account){user=account;document.body.classList.remove('role-admin','role-client');document.body.classList.add('role-'+account.role);$('signedUser').textContent=account.company||account.name;$('loginScreen').classList.add('hidden');hidePreview();pendingThirdParty=null;thirdMessage='';$('thirdResultBlock').classList.add('hidden');$('thirdPartyForm').reset();$('thirdFilesList').innerHTML='';$('contactName').value='';$('company').value=account.company||'';$('email').value='';$('phone').value='';$('thirdContactName').value='';$('thirdCompany').value=account.company||'';loadCart();renderCatalog();page(account.role==='admin'?'users':'schedule')}
+  function enter(account){user=account;document.body.classList.remove('role-admin','role-client');document.body.classList.add('role-'+account.role);$('signedUser').textContent=account.company||account.name;$('loginScreen').classList.add('hidden');hidePreview();pendingThirdParty=null;thirdMessage='';$('thirdResultBlock').classList.add('hidden');$('thirdPartyForm').reset();$('thirdFilesList').innerHTML='';$('contactName').value=account.contacts?.[0]?.name||'';$('company').value=account.company||'';$('email').value=account.contacts?.[0]?.email||'';$('phone').value=account.contacts?.[0]?.phone||'';$('thirdContactName').value='';$('thirdCompany').value=account.company||'';loadCart();renderCatalog();page(account.role==='admin'?'users':'schedule')}
   $('loginForm').addEventListener('submit',async ev=>{ev.preventDefault();$('loginError').textContent='Entrando...';try{await signInWithEmailAndPassword(auth,$('loginEmail').value.trim(),$('loginPassword').value)}catch(error){console.error(error);$('loginError').textContent='Não foi possível entrar. Confira o e-mail e a senha.'}});
   $('logout').addEventListener('click',async()=>{await signOut(auth)});
   let userFilter='client';
@@ -572,7 +657,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     const find=(term,consistency)=>ids.find(e=>activeEquipment(e)&&norm(catalog[e].equipment).includes(term)&&(!consistency||norm(catalog[e].equipment).includes(consistency)));
     const low=find('hidrapulper','baixa'),high=find('hidrapulper','alta');
     const lowCleaner=find('descontaminador','baixa'),highCleaner=find('descontaminador','alta');
-    const screw=find('rosca desaguadora'),reject=catalog.findIndex((item,e)=>activeEquipment(e)&&norm(item.equipment).includes('reject pump'));
+    const screw=find('rosca desaguadora'),reject=ids.find(e=>activeEquipment(e)&&norm(catalog[e].equipment).includes('reject pump'));
     if([low,high,lowCleaner,highCleaner,screw,reject].some(e=>e===undefined||e<0))return '';
     const marker=(index,step,cls,label)=>'<button type="button" class="process-machine '+cls+'" data-family-ids="'+index+'" aria-label="Ver peças de '+esc(catalog[index].equipment)+'" title="'+esc(catalog[index].equipment)+'"><span class="number">'+step+'</span><strong>'+label+'</strong></button>';
     const legend=(index,step,label)=>'<button type="button" data-family-ids="'+index+'"><span>'+step+'</span>'+label+' <small>'+visibleParts(index).length+' peças</small></button>';
@@ -585,13 +670,13 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function renderCatalog(){
     const query=norm($('search').value.trim()),selectedStage=$('category').value,groups=new Map(stageOrder.map(stage=>[stage,[]]));
     catalog.forEach((item,e)=>{
-      if(!activeEquipment(e))return;
+      if(!activeEquipment(e)||!clientHasEquipment(e))return;
       const stage=stageFor(item.category);if(selectedStage&&selectedStage!==stage)return;
       if(query&&!norm(item.equipment).includes(query)&&!visibleParts(e).some(({part})=>norm(part).includes(query)))return;
       groups.get(stage).push(e);
     });
     const sections=stageOrder.map(stage=>{
-      const ids=groups.get(stage);if(!ids.length)return '';
+      const ids=groups.get(stage).sort(compareEquipmentOrder);if(!ids.length)return '';
       const cards=ids.map(e=>{
         const item=catalog[e],photo=photoUrl('equipment',e),parts=visibleParts(e),selected=parts.reduce((total,{p})=>total+(Number(cart[itemKey(e,p)])||0),0);
         return `<button type="button" class="equipment-card" data-equipment-index="${e}" aria-label="Ver peças de ${esc(item.equipment)}"><span class="equipment-card-media">${photo?`<img src="${photo}" alt="Foto de ${esc(item.equipment)}">`:familyIllustration(item.equipment)+'<span class="equipment-card-placeholder">Imagem ilustrativa</span>'}</span><span class="equipment-card-info"><strong>${esc(item.equipment)}</strong><small>${parts.length} ${parts.length===1?'peça disponível':'peças disponíveis'}${selected?` · ${selected} na seleção`:''}</small><span class="equipment-card-cue">Ver peças →</span></span></button>`;
@@ -601,7 +686,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     $('catalog').innerHTML=sections.length?sections.join(''):'<div class="panel catalog-empty">Nenhum equipamento ou peça encontrado.</div>';
   }
   function renderFamilyModal(){
-    const ids=activeFamilyIndices.filter(activeEquipment);if(!ids.length)return;
+    const ids=activeFamilyIndices.filter(index=>activeEquipment(index)&&clientHasEquipment(index));if(!ids.length)return;
     const family=catalogFamily(catalog[ids[0]]),cards=ids.map(index=>{
       const item=catalog[index],photo=photoUrl('equipment',index);
       const count=visibleParts(index).length;return `<button type="button" class="family-variant" data-select-variant="${index}">${photo?`<img src="${photo}" alt="">`:familyIllustration(family)}<span><strong>${esc(item.equipment)}</strong><small>${count} ${count===1?'peça disponível':'peças disponíveis'} · Ver peças →</small></span></button>`;
@@ -609,9 +694,9 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     $('equipmentPartsContent').innerHTML=`<div class="equipment-modal-head"><div><span class="equipment-modal-kicker">FAMÍLIA DE EQUIPAMENTOS</span><h2>${esc(family)}</h2><p>Escolha o modelo ou a finalidade do equipamento para encontrar as peças corretas.</p></div><button type="button" class="equipment-modal-close" data-close-equipment aria-label="Fechar modelos">×</button></div><div class="family-variant-list">${cards}</div><div class="equipment-modal-foot"><span>${ids.length} modelos nesta família</span>${Object.keys(cart).length?'<button type="button" class="btn secondary" data-clear-modal>Limpar toda a seleção</button>':''}<button type="button" class="btn secondary" data-close-equipment>Voltar ao mapa</button></div>`;
     $('equipmentPartsViewer').scrollTop=0;
   }
-  function openFamilyModal(indices){if(user?.role!=='client')return;const ids=indices.filter(activeEquipment);if(!ids.length)return;activeFamilyIndices=ids;if(ids.length===1){openEquipmentModal(ids[0]);return}activeEquipmentIndex=null;openPart='';renderFamilyModal();const viewer=$('equipmentPartsViewer');if(!viewer.open)viewer.showModal();viewer.querySelector('.equipment-modal-close')?.focus()}
+  function openFamilyModal(indices){if(user?.role!=='client')return;const ids=indices.filter(index=>activeEquipment(index)&&clientHasEquipment(index));if(!ids.length)return;activeFamilyIndices=ids;if(ids.length===1){openEquipmentModal(ids[0]);return}activeEquipmentIndex=null;openPart='';renderFamilyModal();const viewer=$('equipmentPartsViewer');if(!viewer.open)viewer.showModal();viewer.querySelector('.equipment-modal-close')?.focus()}
   function renderEquipmentModal(){
-    const e=activeEquipmentIndex,item=catalog[e];if(!activeEquipment(e))return;
+    const e=activeEquipmentIndex,item=catalog[e];if(!activeEquipment(e)||!clientHasEquipment(e))return;
     const viewer=$('equipmentPartsViewer'),scrollTop=viewer.scrollTop,equipment=db.equipmentDetails?.[e]||{},equipmentPhoto=photoUrl('equipment',e);
     const parts=visibleParts(e),selected=parts.reduce((total,{p})=>total+(Number(cart[itemKey(e,p)])||0),0);
     const rows=parts.length?parts.map(({part,p})=>{
@@ -639,10 +724,10 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     if(count)count.textContent=query?`${shown} de ${total} peças`:`${total} ${total===1?'peça':'peças'}`;
     if(empty)empty.hidden=shown!==0||!query||!total;
   }
-  function openEquipmentModal(index){if(user?.role!=='client'||!activeEquipment(index))return;activeEquipmentIndex=index;openPart='';partSearch='';renderEquipmentModal();if(!$('equipmentPartsViewer').open)$('equipmentPartsViewer').showModal();$('equipmentPartsViewer').querySelector('.equipment-modal-close')?.focus()}
+  function openEquipmentModal(index){if(user?.role!=='client'||!activeEquipment(index)||!clientHasEquipment(index))return;activeEquipmentIndex=index;openPart='';partSearch='';renderEquipmentModal();if(!$('equipmentPartsViewer').open)$('equipmentPartsViewer').showModal();$('equipmentPartsViewer').querySelector('.equipment-modal-close')?.focus()}
   function closeEquipmentModal(){if($('equipmentPartsViewer').open)$('equipmentPartsViewer').close();activeEquipmentIndex=null;activeFamilyIndices=[];openPart='';partSearch=''}
   function zoomCatalogPhoto(button){const url=photoUrl(button.dataset.zoomKind,button.dataset.zoomKey);if(!url)return;$('photoViewerImage').src=url;$('photoViewerImage').alt=button.dataset.caption;$('photoViewerCaption').textContent=button.dataset.caption;$('photoViewer').showModal()}
-  function showCatalogStageChooser(){closeEquipmentModal();const counts=new Map(stageOrder.map(stage=>[stage,0]));for(const [e,item] of catalog.entries())if(activeEquipment(e))counts.set(stageFor(item.category),counts.get(stageFor(item.category))+1);$('stageChoices').innerHTML=stageOrder.map(stage=>`<button type="button" class="panel stage-choice" data-pick-stage="${stage}"><strong>${stage}</strong><span>${counts.get(stage)} equipamento(s) · Ver opções →</span></button>`).join('');$('stageChoices').classList.remove('hidden');$('catalogControls').classList.add('hidden');$('category').value='';$('search').value='';openPart='';renderCatalog()}
+  function showCatalogStageChooser(){closeEquipmentModal();const counts=new Map(stageOrder.map(stage=>[stage,0]));for(const [e,item] of catalog.entries())if(activeEquipment(e)&&clientHasEquipment(e))counts.set(stageFor(item.category),counts.get(stageFor(item.category))+1);$('stageChoices').innerHTML=stageOrder.filter(stage=>counts.get(stage)>0).map(stage=>`<button type="button" class="panel stage-choice" data-pick-stage="${stage}"><strong>${stage}</strong><span>${counts.get(stage)} equipamento(s) · Ver opções →</span></button>`).join('')||'<div class="panel catalog-empty">Nenhum equipamento CARTAMAC foi vinculado a este acesso. Solicite à equipe CARTAMAC a atualização do seu cadastro.</div>';$('stageChoices').classList.remove('hidden');$('catalogControls').classList.add('hidden');$('category').value='';$('search').value='';openPart='';renderCatalog()}
   $('stageChoices').addEventListener('click',ev=>{const choice=ev.target.closest('[data-pick-stage]');if(!choice)return;$('category').value=choice.dataset.pickStage;$('stageChoices').classList.add('hidden');$('catalogControls').classList.remove('hidden');renderCatalog()});
   $('backStages').addEventListener('click',showCatalogStageChooser);
   refreshCatalogCategories();
@@ -671,7 +756,53 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function refreshCatalogCategories(){const current=$('category').value;$('category').innerHTML='<option value="">Todas as etapas</option>'+stageOrder.map(stage=>`<option value="${stage}">${stage}</option>`).join('');$('category').value=current;$('catalogCategories').innerHTML=stageOrder.map(stage=>`<option value="${stage}"></option>`).join('')}
   function catalogOptions(){return catalog.map((item,index)=>activeEquipment(index)?`<option value="${index}">${esc(item.equipment)}</option>`:'').join('')}
   function selectCatalogEquipment(id,previous){const select=$(id);select.innerHTML='<option value="">Selecione o equipamento/grupo</option>'+catalogOptions();select.value=previous;}
-  function renderCatalogAdmin(){if(user?.role!=='admin')return;refreshCatalogCategories();const newParent=$('newPartEquipment').value,editEquipment=$('editEquipmentSelect').value,editParent=$('editPartEquipment').value;selectCatalogEquipment('newPartEquipment',newParent);selectCatalogEquipment('editEquipmentSelect',editEquipment);selectCatalogEquipment('editPartEquipment',editParent);loadEquipmentEditor();loadPartOptions()}
+  function compareEquipmentOrder(a,b){
+    const first=Number.isFinite(Number(catalog[a]?.sortOrder))?Number(catalog[a].sortOrder):1000+a;
+    const second=Number.isFinite(Number(catalog[b]?.sortOrder))?Number(catalog[b].sortOrder):1000+b;
+    return first-second||a-b;
+  }
+  const catalogOrderDraft=new Map();
+  function renderCatalogOrder(){
+    if(user?.role!=='admin')return;
+    const root=$('catalogOrderSections'),open=new Set([...root.querySelectorAll('details[open]')].map(item=>item.dataset.orderStage));
+    for(const stage of stageOrder){
+      const available=catalog.map((item,index)=>activeEquipment(index)&&stageFor(item.category)===stage?index:null).filter(index=>index!==null).sort(compareEquipmentOrder);
+      const current=(catalogOrderDraft.get(stage)||[]).filter(index=>available.includes(index));
+      for(const index of available)if(!current.includes(index))current.push(index);
+      catalogOrderDraft.set(stage,current);
+    }
+    root.innerHTML=stageOrder.map((stage,groupIndex)=>{
+      const ids=catalogOrderDraft.get(stage),expanded=open.size?open.has(stage):groupIndex===0;
+      return `<details class="catalog-order-group" data-order-stage="${stage}" ${expanded?'open':''}><summary><span>${esc(stage)}</span><small>${ids.length} equipamento(s)</small></summary><div class="catalog-order-items">${ids.length?ids.map((index,position)=>`<div class="catalog-order-item"><span class="catalog-order-position">${position+1}</span><strong>${esc(catalog[index].equipment)}</strong><label>Posição <select class="field" data-order-index="${index}" data-order-group="${stage}">${ids.map((_,target)=>`<option value="${target}" ${target===position?'selected':''}>${target+1}</option>`).join('')}</select></label></div>`).join(''):'<p class="small-note">Nenhum equipamento nesta seção.</p>'}</div><div class="catalog-order-actions"><button type="button" class="btn secondary" data-save-order="${stage}" ${ids.length?'':'disabled'}>Salvar ordem desta seção</button><span data-order-message="${stage}" class="small-note" role="status"></span></div></details>`;
+    }).join('');
+  }
+  $('catalogOrderSections').addEventListener('change',event=>{
+    const select=event.target.closest('[data-order-index]');if(!select)return;
+    const stage=select.dataset.orderGroup,index=Number(select.dataset.orderIndex),target=Number(select.value),ids=catalogOrderDraft.get(stage);
+    if(!ids||!ids.includes(index)||!Number.isInteger(target)||target<0||target>=ids.length)return;
+    ids.splice(ids.indexOf(index),1);ids.splice(target,0,index);
+    renderCatalogOrder();
+    const message=[...$('catalogOrderSections').querySelectorAll('[data-order-message]')].find(item=>item.dataset.orderMessage===stage);
+    if(message)message.textContent='Ordem alterada. Salve esta seção para atualizar o catálogo.';
+  });
+  $('catalogOrderSections').addEventListener('click',async event=>{
+    const button=event.target.closest('[data-save-order]');if(!button)return;
+    const stage=button.dataset.saveOrder,ids=catalogOrderDraft.get(stage);if(!ids)return;
+    const previous=structuredClone(db),old=ids.map(index=>({index,sortOrder:catalog[index].sortOrder}));
+    ids.forEach((index,position)=>{catalog[index].sortOrder=position});db.catalog=structuredClone(catalog);
+    button.disabled=true;const message=[...$('catalogOrderSections').querySelectorAll('[data-order-message]')].find(item=>item.dataset.orderMessage===stage);
+    if(message)message.textContent='Salvando ordem...';
+    if(!await persist()){
+      db=previous;for(const item of old){if(item.sortOrder===undefined)delete catalog[item.index].sortOrder;else catalog[item.index].sortOrder=item.sortOrder}
+      button.disabled=false;if(message)message.textContent='Não foi possível salvar. Tente novamente.';return;
+    }
+    renderCatalogOrder();renderCatalog();renderClientEquipmentChoices();
+    const status=[...$('catalogOrderSections').querySelectorAll('[data-order-message]')].find(item=>item.dataset.orderMessage===stage);
+    if(status)status.textContent='Ordem salva nesta seção.';
+    notify('Ordem dos equipamentos salva');
+  });
+
+  function renderCatalogAdmin(){if(user?.role!=='admin')return;refreshCatalogCategories();const newParent=$('newPartEquipment').value,editEquipment=$('editEquipmentSelect').value,editParent=$('editPartEquipment').value;selectCatalogEquipment('newPartEquipment',newParent);selectCatalogEquipment('editEquipmentSelect',editEquipment);selectCatalogEquipment('editPartEquipment',editParent);loadEquipmentEditor();loadPartOptions();renderCatalogOrder()}
   function loadEquipmentEditor(){const id=$('editEquipmentSelect').value,details=db.equipmentDetails?.[id]||{},photo=id!==''?photoUrl('equipment',id):'';$('editEquipmentName').value=id!==''?catalog[Number(id)]?.equipment||'':'';$('editEquipmentCategory').value=id!==''?catalog[Number(id)]?.category||'':'';$('editEquipmentDescription').value=details.description||'';$('equipmentPhotoPreview').innerHTML=photo?`<img src="${photo}" alt="Foto atual do equipamento">`:'Nenhuma foto cadastrada'}
   function loadPartOptions(){const e=$('editPartEquipment').value,previous=$('editPartSelect').value,parts=e===''?[]:visibleParts(Number(e));$('editPartSelect').innerHTML='<option value="">Selecione a peça</option>'+parts.map(({part,p})=>`<option value="${p}">${esc(part)}</option>`).join('');$('editPartSelect').value=previous;loadPartEditor()}
   function loadPartEditor(){const e=$('editPartEquipment').value,p=$('editPartSelect').value,selected=activePart(e,p),key=`${e}:${p}`,details=selected?db.partDetails?.[key]||{}:{},photo=selected?photoUrl('part',key):'';$('editPartName').value=selected?catalog[Number(e)].parts[Number(p)]:'';$('editPartTag').value=details.tag||'';$('editPartDs').value=selected?details.ds||catalog[Number(e)].codes?.[Number(p)]||'':'';$('editPartDescription').value=details.description||'';$('editPartSpecEnabled').checked=!!details.allowSpecification;$('editPartSpecPrompt').value=details.specificationPrompt||'';$('partPhotoPreview').innerHTML=photo?`<img src="${photo}" alt="Foto atual da peça">`:'Nenhuma foto cadastrada'}
@@ -783,8 +914,70 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function renderOrders(){if(user?.role!=='client')return;const orders=db.orders.filter(o=>orderLinkedTo(o,user.id)),active=orders.filter(o=>!o.completed);$('activeCount').textContent=String(active.length);$('doneCount').textContent=String(orders.length-active.length);const updated=orders.reduce((v,o)=>o.updatedAt>v?o.updatedAt:v,'');$('lastUpdate').textContent=updated?new Date(updated).toLocaleDateString('pt-BR'):'—';$('orders').innerHTML=orders.length?orders.map(progressCard).join(''):'<div class="panel empty"><div class="icon">▤</div><h3>Nenhum cronograma vinculado</h3><p>A equipe CARTAMAC pode vincular seus pedidos ao seu acesso.</p></div>'}
   $('orders').addEventListener('click',ev=>{const button=ev.target.closest('[data-download-order]');if(button)downloadAttachment(Number(button.dataset.downloadOrder),Number(button.dataset.downloadIndex))});
 
-  function renderUsers(){if(user?.role!=='admin')return;const imports=userFilter==='imports',query=norm($('userSearch').value.trim());$('usersManagement').classList.toggle('hidden',imports);$('usersImports').classList.toggle('hidden',!imports);document.querySelectorAll('[data-user-filter]').forEach(b=>b.classList.toggle('secondary',b.dataset.userFilter!==userFilter));if(imports){renderAdminOrders();return}$('usersListTitle').textContent=userFilter==='client'?'Clientes':'Administradores';$('userSearch').placeholder=userFilter==='client'?'Pesquisar cliente ou e-mail':'Pesquisar administrador ou e-mail';$('usersList').innerHTML=db.users.filter(u=>u.role===userFilter&&(!query||norm(`${u.name} ${u.company||''} ${u.email}`).includes(query))).map(u=>`<button type="button" class="user-row ${Number($('userId').value)===u.id?'active':''}" data-edit-user="${u.id}"><span class="user-avatar">${esc((u.name||'?').split(/\s+/).slice(0,2).map(p=>p[0]).join('').toUpperCase())}</span><span class="user-row-info"><b>${esc(u.name)}</b><small>${esc(u.email)}</small></span><span class="user-badge ${u.role==='admin'?'admin':''}">${u.role==='admin'?'Admin':'Cliente'}</span></button>`).join('')||'<div class="empty">Nenhum acesso encontrado.</div>';renderUserLinks()}
-  function syncUserBusinessFields(){const isClient=$('userRole').value==='client';$('userBusinessFields').hidden=!isClient;$('userCompany').required=isClient;$('userCompany').closest('.form-group').querySelector('label').textContent=isClient?'Empresa *':'Empresa';for(const id of ['userAddress','userCity'])$(id).required=isClient}
+  let clientEquipmentDraft=new Set();
+  let clientUserTab='profile';
+  function setClientUserTab(tab){
+    clientUserTab=tab==='equipment'?'equipment':'profile';
+    $('userProfilePanel').hidden=clientUserTab!=='profile';
+    $('userEquipmentPanel').hidden=clientUserTab!=='equipment';
+    document.querySelectorAll('[data-user-tab]').forEach(button=>{
+      const selected=button.dataset.userTab===clientUserTab;
+      button.classList.toggle('active',selected);
+      button.setAttribute('aria-selected',String(selected));
+    });
+    if(clientUserTab==='equipment')renderClientEquipmentChoices();
+  }
+  function clientHasEquipment(index){
+    return user?.role!=='client'||Array.isArray(user.equipmentIds)&&user.equipmentIds.includes(Number(index));
+  }
+  function loadClientEquipment(){
+    const account=db.users.find(item=>item.role==='client'&&item.id===Number($('userId').value));
+    clientEquipmentDraft=new Set((account?.equipmentIds||[]).map(Number).filter(activeEquipment));
+    $('userEquipmentSearch').value='';
+    renderClientEquipmentChoices();
+  }
+  function renderClientEquipmentChoices(){
+    const id=Number($('userId').value),account=db.users.find(item=>item.role==='client'&&item.id===id),target=$('userEquipmentList');
+    $('userEquipmentSave').disabled=!account;
+    $('userEquipmentHint').textContent=account?`Selecione os equipamentos que ${account.company||account.name} possui. Somente estes aparecerão no catálogo ao entrar no portal.`:'Salve primeiro o login e os dados da empresa. Depois escolha os equipamentos aqui.';
+    if(!account){target.innerHTML='<div class="user-equipment-empty">Cadastre o cliente para liberar a seleção de equipamentos.</div>';$('userEquipmentCount').textContent='';return}
+    const search=norm($('userEquipmentSearch').value.trim()),groups=new Map(stageOrder.map(stage=>[stage,[]]));
+    for(const [index,item] of catalog.entries()){
+      if(!activeEquipment(index)||search&&!norm(item.equipment).includes(search))continue;
+      groups.get(stageFor(item.category)).push({index,item});
+    }
+    const sections=stageOrder.map(stage=>{
+      const items=groups.get(stage).sort((a,b)=>compareEquipmentOrder(a.index,b.index));if(!items.length)return '';
+      return `<section class="user-equipment-group"><h4>${esc(stage)} <small>${items.length}</small></h4><div class="user-equipment-options">${items.map(({index,item})=>`<label class="user-equipment-option"><input type="checkbox" data-client-equipment="${index}" ${clientEquipmentDraft.has(index)?'checked':''}><span>${esc(item.equipment)}</span></label>`).join('')}</div></section>`;
+    }).filter(Boolean);
+    target.innerHTML=sections.length?sections.join(''):'<div class="user-equipment-empty">Nenhum equipamento encontrado nesta busca.</div>';
+    $('userEquipmentCount').textContent=`${clientEquipmentDraft.size} selecionado(s) de ${catalog.filter((item,index)=>activeEquipment(index)).length} equipamento(s)`;
+  }
+  document.querySelectorAll('[data-user-tab]').forEach(button=>button.addEventListener('click',()=>setClientUserTab(button.dataset.userTab)));
+  $('userEquipmentSearch').addEventListener('input',renderClientEquipmentChoices);
+  $('userEquipmentList').addEventListener('change',event=>{
+    const input=event.target.closest('[data-client-equipment]');if(!input)return;
+    const index=Number(input.dataset.clientEquipment);
+    if(input.checked)clientEquipmentDraft.add(index);else clientEquipmentDraft.delete(index);
+    $('userEquipmentCount').textContent=`${clientEquipmentDraft.size} selecionado(s) de ${catalog.filter((item,e)=>activeEquipment(e)).length} equipamento(s)`;
+    $('userEquipmentMessage').textContent='Seleção alterada. Salve para atualizar o acesso do cliente.';
+  });
+  $('userEquipmentSave').addEventListener('click',async()=>{
+    const account=db.users.find(item=>item.role==='client'&&item.id===Number($('userId').value));if(!account)return;
+    const previous=structuredClone(db),next=[...clientEquipmentDraft].filter(activeEquipment).sort((a,b)=>a-b);
+    account.equipmentIds=next;$('userEquipmentMessage').textContent='Salvando equipamentos...';
+    if(!await persist()){db=previous;$('userEquipmentMessage').textContent='Não foi possível salvar. Tente novamente.';return}
+    $('userEquipmentMessage').textContent=`${next.length} equipamento(s) vinculado(s) a ${account.company||account.name}.`;
+    notify('Equipamentos do cliente salvos');
+  });
+
+  function renderUsers(){if(user?.role!=='admin')return;const imports=userFilter==='imports',query=norm($('userSearch').value.trim());$('usersManagement').classList.toggle('hidden',imports);$('usersImports').classList.toggle('hidden',!imports);document.querySelectorAll('[data-user-filter]').forEach(b=>b.classList.toggle('secondary',b.dataset.userFilter!==userFilter));if(imports){renderAdminOrders();return}$('usersListTitle').textContent=userFilter==='client'?'Clientes':'Administradores';$('userSearch').placeholder=userFilter==='client'?'Pesquisar cliente ou e-mail':'Pesquisar administrador ou e-mail';$('usersList').innerHTML=db.users.filter(u=>u.role===userFilter&&(!query||norm(`${u.name} ${u.company||''} ${u.email}`).includes(query))).map(u=>`<button type="button" class="user-row ${Number($('userId').value)===u.id?'active':''}" data-edit-user="${u.id}"><span class="user-avatar">${esc((u.name||'?').split(/\s+/).slice(0,2).map(p=>p[0]).join('').toUpperCase())}</span><span class="user-row-info"><b>${esc(u.role==='client'?u.company||u.name:u.name)}</b><small>${esc(u.email)}</small></span><span class="user-badge ${u.role==='admin'?'admin':''}">${u.role==='admin'?'Admin':'Cliente'}</span></button>`).join('')||'<div class="empty">Nenhum acesso encontrado.</div>';renderUserLinks()}
+  function companyKey(value){return norm(value).replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ')}
+  function addUserContact(contact={}){const row=document.createElement('div');row.className='user-contact-row';row.innerHTML='<div class="form-group"><label>Nome<input class="field" data-user-contact-name type="text" maxlength="120" autocomplete="off"></label></div><div class="form-group"><label>E-mail<input class="field" data-user-contact-email type="email" maxlength="160" autocomplete="off"></label></div><div class="form-group"><label>Telefone<input class="field" data-user-contact-phone type="tel" maxlength="60" autocomplete="off"></label></div><button class="btn secondary" type="button" data-remove-user-contact>Retirar</button>';row.querySelector('[data-user-contact-name]').value=contact.name||'';row.querySelector('[data-user-contact-email]').value=contact.email||'';row.querySelector('[data-user-contact-phone]').value=contact.phone||'';$('userContacts').append(row)}
+  function userContacts(){return [...$('userContacts').querySelectorAll('.user-contact-row')].map(row=>({name:row.querySelector('[data-user-contact-name]').value.trim(),email:row.querySelector('[data-user-contact-email]').value.trim(),phone:row.querySelector('[data-user-contact-phone]').value.trim()}))}
+  $('addUserContact').addEventListener('click',()=>addUserContact());
+  $('userContacts').addEventListener('click',event=>{const button=event.target.closest('[data-remove-user-contact]');if(button)button.closest('.user-contact-row').remove()});
+  function syncUserBusinessFields(){const isClient=$('userRole').value==='client';$('userBusinessFields').hidden=!isClient;$('userContactsSection').hidden=!isClient;$('userClientTabs').hidden=!isClient;if(!isClient)setClientUserTab('profile');$('userAdminNameGroup').hidden=isClient;$('userName').required=!isClient;$('userCompany').required=isClient;for(const id of ['userAddress','userCity'])$(id).required=isClient;$('userForm').querySelector('[type="submit"]').textContent=isClient?'Salvar cliente':'Salvar administrador'}
   function renderUserLinks(){
     syncUserBusinessFields();
     const id=Number($('userId').value),isClient=$('userRole').value==='client'&&!!id;
@@ -795,12 +988,25 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     $('userOrderSelect').innerHTML='<option value="">+ Adicionar pedido...</option>'+available.map(o=>{const otherNames=orderClientIds(o).map(clientId=>db.users.find(u=>u.id===clientId)?.name||`acesso #${clientId}`);return `<option value="${o.id}">${esc(o.code)} · ${esc(o.name)}${otherNames.length?` — já vinculado a ${esc(otherNames.join(', '))}`:''}</option>`}).join('');
     $('userFilesList').innerHTML=linked.length?linked.map(o=>`<div class="user-file-box"><b>▣ ${esc(o.code)} — ${esc(o.name)}</b><span class="muted">Anexos online indisponíveis nesta versão.</span></div>`).join(''):'<span class="muted">Vincule um pedido para ver seus detalhes.</span>';
   }
-  function resetUserForm(){$('userForm').reset();$('userId').value='';$('userRole').value=userFilter;$('userEmail').disabled=false;$('userPassword').disabled=false;$('userPassword').type='password';$('userPassword').required=true;$('userPassword').placeholder='Senha inicial (mínimo 6 caracteres)';$('userFormTitle').textContent=userFilter==='client'?'Novo cliente':'Novo administrador';$('userMsg').textContent='';renderUsers()}
+  function resetUserForm(){$('userForm').reset();$('userId').value='';$('userRole').value=userFilter;$('userContacts').replaceChildren();if(userFilter==='client')addUserContact();setClientUserTab('profile');loadClientEquipment();$('userEmail').disabled=false;$('userPassword').disabled=false;$('userPassword').type='password';$('userPassword').required=true;$('userPassword').placeholder='Senha inicial (mínimo 6 caracteres)';$('userFormTitle').textContent=userFilter==='client'?'Novo cliente':'Novo administrador';$('userMsg').textContent='';renderUsers()}
   document.querySelectorAll('[data-user-filter]').forEach(b=>b.addEventListener('click',()=>{userFilter=b.dataset.userFilter;if(userFilter!=='imports'){$('userSearch').value='';resetUserForm()}renderUsers()}));
   $('userSearch').addEventListener('input',renderUsers);
   $('newUserBtn').addEventListener('click',resetUserForm);
-  $('userForm').addEventListener('submit',async ev=>{ev.preventDefault();const id=Number($('userId').value),email=$('userEmail').value.trim().toLowerCase(),password=$('userPassword').value,role=$('userRole').value;if(db.users.some(u=>u.email.toLowerCase()===email&&u.id!==id)){$('userMsg').textContent='Este e-mail já está cadastrado.';return}if(id===1){$('userMsg').textContent='O acesso principal é gerenciado no console do Firebase.';return}if(!id&&password.length<6){$('userMsg').textContent='Informe uma senha inicial com pelo menos 6 caracteres.';return}const before=structuredClone(db),record=id?db.users.find(u=>u.id===id):{id:db.nextUserId++};if(!record){$('userMsg').textContent='Acesso não encontrado.';return}if(!id){let secondary;try{secondary=initializeApp(firebaseConfig,`novo-usuario-${Date.now()}`);const credential=await createUserWithEmailAndPassword(getAuth(secondary),email,password);record.uid=credential.user.uid;await signOut(getAuth(secondary))}catch(error){db=before;console.error(error);$('userMsg').textContent='Não foi possível criar a conta no Firebase. Confira se o e-mail já existe.';return}finally{if(secondary)await deleteApp(secondary)}}Object.assign(record,{role,name:$('userName').value.trim(),company:$('userCompany').value.trim(),email,...(role==='client'?{addressLine:$('userAddress').value.trim(),cityState:$('userCity').value.trim(),companyPhone:$('userCompanyPhone').value.trim()}:{})});if(!id)db.users.push(record);$('userMsg').textContent='Salvando acesso...';if(!await persist()){db=before;$('userMsg').textContent='Não foi possível salvar o perfil. A conta criada deve ser conferida no Authentication do Firebase.';return}$('userId').value=record.id;$('userPassword').value='';$('userPassword').disabled=true;$('userPassword').required=false;$('userEmail').disabled=true;$('userFormTitle').textContent=record.name;renderUsers();$('userMsg').textContent='Acesso salvo. A senha é gerenciada pelo Firebase.';notify('Acesso salvo')});
-  $('usersList').addEventListener('click',ev=>{const edit=Number(ev.target.closest('[data-edit-user]')?.dataset.editUser);if(!edit)return;const u=db.users.find(x=>x.id===edit);if(!u)return;$('userId').value=u.id;$('userRole').value=u.role;$('userName').value=u.name;$('userCompany').value=u.company||'';$('userAddress').value=u.addressLine||'';$('userCity').value=u.cityState||'';$('userCompanyPhone').value=u.companyPhone||'';$('userEmail').value=u.email;$('userEmail').disabled=true;$('userPassword').value='';$('userPassword').disabled=true;$('userPassword').required=false;$('userPassword').placeholder='Senha gerenciada pelo Firebase';$('userFormTitle').textContent=u.name;renderUsers()});
+  $('userForm').addEventListener('submit',async ev=>{
+    ev.preventDefault();const id=Number($('userId').value),email=$('userEmail').value.trim().toLowerCase(),password=$('userPassword').value,role=$('userRole').value,isClient=role==='client',company=$('userCompany').value.trim(),contacts=isClient?userContacts():[];
+    if(db.users.some(u=>u.email.toLowerCase()===email&&u.id!==id)){$('userMsg').textContent='Este e-mail já está cadastrado.';return}
+    if(isClient&&db.users.some(u=>u.role==='client'&&u.id!==id&&companyKey(u.company||'')===companyKey(company))){$('userMsg').textContent='Esta empresa já possui um cadastro. Selecione-a na lista para editar os dados e contatos.';return}
+    if(isClient&&(!contacts.length||contacts.some(contact=>!contact.name||(!contact.email&&!contact.phone)))){$('userMsg').textContent='Adicione pelo menos um contato. Preencha o nome e o e-mail ou telefone de cada contato.';return}
+    if(isClient&&[...$('userContacts').querySelectorAll('[data-user-contact-email]')].some(input=>input.value.trim()&&!input.checkValidity())){$('userMsg').textContent='Confira o e-mail dos contatos.';return}
+    if(id===1){$('userMsg').textContent='O acesso principal é gerenciado no console do Firebase.';return}
+    if(!id&&password.length<6){$('userMsg').textContent='Informe uma senha inicial com pelo menos 6 caracteres.';return}
+    const before=structuredClone(db),record=id?db.users.find(u=>u.id===id):{id:db.nextUserId++};if(!record){$('userMsg').textContent='Acesso não encontrado.';return}
+    if(!id){let secondary;try{secondary=initializeApp(firebaseConfig,'novo-usuario-'+Date.now());const credential=await createUserWithEmailAndPassword(getAuth(secondary),email,password);record.uid=credential.user.uid;await signOut(getAuth(secondary))}catch(error){db=before;console.error(error);$('userMsg').textContent='Não foi possível criar a conta no Firebase. Confira se o e-mail já existe.';return}finally{if(secondary)await deleteApp(secondary)}}
+    Object.assign(record,{role,name:isClient?company:$('userName').value.trim(),company,email,...(isClient?{addressLine:$('userAddress').value.trim(),cityState:$('userCity').value.trim(),companyPhone:$('userCompanyPhone').value.trim(),contacts}:{})});if(!id){record.equipmentIds=[];db.users.push(record)}
+    $('userMsg').textContent='Salvando acesso...';if(!await persist()){db=before;$('userMsg').textContent='Não foi possível salvar o perfil. A conta criada deve ser conferida no Authentication do Firebase.';return}
+    $('userId').value=record.id;$('userPassword').value='';$('userPassword').disabled=true;$('userPassword').required=false;$('userEmail').disabled=true;$('userFormTitle').textContent=isClient?record.company:record.name;loadClientEquipment();renderUsers();$('userMsg').textContent='Cadastro salvo. Os contatos estarão disponíveis na proposta.';notify('Cadastro salvo')
+  });
+  $('usersList').addEventListener('click',ev=>{const edit=Number(ev.target.closest('[data-edit-user]')?.dataset.editUser);if(!edit)return;const u=db.users.find(x=>x.id===edit);if(!u)return;$('userId').value=u.id;$('userRole').value=u.role;$('userName').value=u.name;$('userCompany').value=u.company||'';$('userAddress').value=u.addressLine||'';$('userCity').value=u.cityState||'';$('userCompanyPhone').value=u.companyPhone||'';$('userContacts').replaceChildren();for(const contact of Array.isArray(u.contacts)?u.contacts:[])addUserContact(contact);if(u.role==='client'&&!u.contacts?.length)addUserContact();$('userEmail').value=u.email;$('userEmail').disabled=true;$('userPassword').value='';$('userPassword').disabled=true;$('userPassword').required=false;$('userPassword').placeholder='Senha gerenciada pelo Firebase';$('userFormTitle').textContent=u.company||u.name;setClientUserTab('profile');loadClientEquipment();renderUsers()});
   $('toggleUserPassword').addEventListener('click',()=>{const field=$('userPassword');field.type=field.type==='password'?'text':'password';$('toggleUserPassword').setAttribute('aria-label',field.type==='password'?'Mostrar senha':'Ocultar senha')});
   $('deleteSelectedUser').addEventListener('click',async()=>{
     const id=Number($('userId').value),account=db.users.find(item=>item.id===id);
@@ -1100,7 +1306,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     proposalRequestId=String(id);proposalBudgetData=null;$('proposalBudgetFile').value='';$('proposalDelivery').value='';$('proposalPayment').value='50% no pedido\n30% na entrega\n20% a 28 dias da entrega';
     const client=request.manual?null:db.users.find(account=>request.clientUid?account.uid===request.clientUid:account.id===request.clientId);
     const cover={proposalCompany:client?.company||request.company||'',proposalAddress:client?.addressLine||request.addressLine||'',proposalCity:client?.cityState||request.cityState||'',proposalCompanyPhone:client?.companyPhone||request.companyPhone||request.phone||'',proposalReference:request.manual?request.reference||'Proposta avulsa':`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id}`,proposalEquipmentTitle:[...new Set((request.items||[]).map(item=>item.equipmentName||catalog[item.equipment]?.equipment).filter(Boolean))].join(' / ').slice(0,240)};
-    for(const [field,value] of Object.entries(cover))$(field).value=value;$('proposalExtraContacts').replaceChildren();for(const contact of (Array.isArray(request.contacts)?request.contacts:[{name:request.contactName||'',email:request.email||'',phone:request.phone||''}]))if(contact.name||contact.email||contact.phone)addExtraContact('proposalExtraContacts',contact);$('proposalRepresentative').value='';
+    for(const [field,value] of Object.entries(cover))$(field).value=value;$('proposalExtraContacts').replaceChildren();for(const contact of (client?.contacts?.length?client.contacts:Array.isArray(request.contacts)?request.contacts:[{name:request.contactName||'',email:request.email||'',phone:request.phone||''}]))if(contact.name||contact.email||contact.phone)addExtraContact('proposalExtraContacts',contact);$('proposalRepresentative').value='';
     $('proposalBuilderPreview').replaceChildren();setProposalDownloadsDisabled(true);$('proposalBuilderSubtitle').textContent=request.manual?`Proposta avulsa · ${quoteCompanyName(request)}`:`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id} · ${quoteCompanyName(request)}`;$('proposalBuilderMessage').textContent='Selecione o orçamento editável e confira os dados da capa, prazo e pagamento.';$('proposalBuilder').showModal();
   }
   function closeProposalBuilder(){proposalRequestId=null;proposalBudgetData=null;$('proposalBudgetFile').value='';$('proposalDelivery').value='';$('proposalPayment').value='';for(const id of ['proposalCompany','proposalAddress','proposalCity','proposalCompanyPhone','proposalReference','proposalEquipmentTitle'])$(id).value='';$('proposalExtraContacts').replaceChildren();$('proposalRepresentative').value='';$('proposalBuilderPreview').replaceChildren();setProposalDownloadsDisabled(true);if($('proposalBuilder').open)$('proposalBuilder').close()}
@@ -1182,7 +1388,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     if(!account){$('manualExtraContacts').replaceChildren();return}
     const latestQuote=db.quotes.find(quote=>quote.clientUid?quote.clientUid===account.uid:Number(quote.clientId)===Number(account.id));
     for(const [field,value] of Object.entries({manualCompany:account.company||account.name,manualAddress:account.addressLine||latestQuote?.addressLine||'',manualCity:account.cityState||latestQuote?.cityState||'',manualCompanyPhone:account.companyPhone||latestQuote?.companyPhone||''}))$(field).value=value;
-    $('manualExtraContacts').replaceChildren();addExtraContact('manualExtraContacts',{name:latestQuote?.contactName||account.name||'',email:latestQuote?.email||account.email||'',phone:latestQuote?.phone||account.phone||''});
+    $('manualExtraContacts').replaceChildren();for(const contact of (account.contacts?.length?account.contacts:[{name:latestQuote?.contactName||'',email:latestQuote?.email||'',phone:latestQuote?.phone||''}]))if(contact.name||contact.email||contact.phone)addExtraContact('manualExtraContacts',contact);
   });
   $('manualEquipment').addEventListener('change',manualProposalEquipmentChanged);
   $('manualPart').addEventListener('change',manualProposalPartChanged);
