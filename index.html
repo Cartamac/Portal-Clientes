@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="icon" type="image/png" href="./cartamac-favicon.png">
-<title>CARTAMAC | Portal do Cliente | rev026</title>
+<title>CARTAMAC | Portal do Cliente | rev027</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     :root{--bg:#0d0d0d;--bg2:#121212;--bg3:#1a1a1a;--bg4:#222;--border:#2a2a2a;--border2:#383838;--text:#ececec;--muted:#999;--gold:#c8a84b;--green:#5cb85c;--red:#e05252;--radius:10px}
@@ -1040,7 +1040,33 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     return numbers;
   }
   function quoteDate(value){const date=new Date(value);return Number.isNaN(date.getTime())?'Data não informada':date.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}
-  function clientHistoryQuotes(){if(user?.role!=='client'||!firebaseUser)return [];return db.quotes.filter(q=>q.clientUid===firebaseUser.uid).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||'')))}
+  // A contagem começa quando a equipe muda EM ANÁLISE para ENVIADO.
+  const QUOTE_VISIBILITY_MS=30*24*60*60*1000;
+  function quoteIsVisible(q,now=Date.now()){
+    if(q.status!=='enviado')return true;
+    const sent=Date.parse(q.sentAt||'');
+    return !Number.isFinite(sent)||now-sent<QUOTE_VISIBILITY_MS;
+  }
+  function visibleQuotes(){return db.quotes.filter(q=>quoteIsVisible(q))}
+  // Documentos antigos não guardavam a data do envio: iniciam seus 30 dias na primeira
+  // abertura pela equipe após esta versão, sem serem ocultados prematuramente.
+  async function reconcileOldQuotes(){
+    if(!firebaseUser||!db.users.some(u=>u.uid===firebaseUser.uid&&u.role==='admin'))return;
+    const testNames=new Set(['cartamac paper machinery','rio bonito','cartamac','teste']);
+    const now=new Date().toISOString(),batch=writeBatch(firestore);
+    let changed=0;const removed=new Set(),dated=[];
+    for(const q of db.quotes){
+      const account=db.users.find(u=>q.clientUid?u.uid===q.clientUid:String(u.id)===String(q.clientId));
+      if(!account&&testNames.has(norm(q.company||''))) {
+        batch.delete(doc(firestore,'portalQuotes',String(q.id)));removed.add(String(q.id));changed++;continue;
+      }
+      if(q.status==='enviado'&&!q.sentAt){
+        batch.update(doc(firestore,'portalQuotes',String(q.id)),{sentAt:now});dated.push(q);changed++;
+      }
+    }
+    if(changed){await batch.commit();for(const q of dated)q.sentAt=now;db.quotes=db.quotes.filter(q=>!removed.has(String(q.id)))}
+  }
+  function clientHistoryQuotes(){if(user?.role!=='client'||!firebaseUser)return [];return visibleQuotes().filter(q=>q.clientUid===firebaseUser.uid).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||'')))}
   function renderClientHistory(){
     if(user?.role!=='client')return;
     const quotes=clientHistoryQuotes(),numbers=quoteSequenceMap(quotes);$('historySummary').textContent=`${quotes.length} ${quotes.length===1?'solicitação registrada':'solicitações registradas'}`;
@@ -1059,6 +1085,8 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     return historyRefreshPromise;
   }
   $('refreshHistory').addEventListener('click',refreshClientHistory);
+  let lastVisibleQuoteIds=null;
+  setInterval(()=>{if(!user)return;const ids=visibleQuotes().map(q=>q.id).join(',');if(lastVisibleQuoteIds!==null&&ids!==lastVisibleQuoteIds){if(user.role==='admin')renderRequests();else renderClientHistory()}lastVisibleQuoteIds=ids},60*1000);
   $('historyList').addEventListener('click',ev=>{const button=ev.target.closest('[data-go]');if(button)page(button.dataset.go)});
   function quoteItemStage(item){return stageOrder.includes(item.stage)?item.stage:stageFor(catalog[item.equipment]?.category)}
   function portalQuoteExportPayload(q){
@@ -1312,10 +1340,10 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function closeProposalBuilder(){proposalRequestId=null;proposalBudgetData=null;$('proposalBudgetFile').value='';$('proposalDelivery').value='';$('proposalPayment').value='';for(const id of ['proposalCompany','proposalAddress','proposalCity','proposalCompanyPhone','proposalReference','proposalEquipmentTitle'])$(id).value='';$('proposalExtraContacts').replaceChildren();$('proposalRepresentative').value='';$('proposalBuilderPreview').replaceChildren();setProposalDownloadsDisabled(true);if($('proposalBuilder').open)$('proposalBuilder').close()}
   function renderRequests(){
     if(user?.role!=='admin')return;
-    const root=$('requestsList'),numbers=quoteSequenceMap(db.quotes);
-    if(!db.quotes.length){selectedQuoteClient=null;root.innerHTML='<div class="panel empty">Nenhuma solicitação registrada no portal.</div>';return}
+    const root=$('requestsList'),quotesToShow=visibleQuotes(),numbers=quoteSequenceMap(db.quotes);
+    if(!quotesToShow.length){selectedQuoteClient=null;root.innerHTML='<div class="panel empty">Nenhuma solicitação registrada no portal.</div>';return}
     const groups=new Map();
-    for(const quote of db.quotes){const key=quoteClientKey(quote);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(quote)}
+    for(const quote of quotesToShow){const key=quoteClientKey(quote);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(quote)}
     for(const quotes of groups.values())quotes.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
     if(!selectedQuoteClient||!groups.has(selectedQuoteClient)){
       selectedQuoteClient=null;
@@ -1616,7 +1644,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     try{const data=JSON.parse(await file.text());if(user?.role!=='admin'||!proposalRequestId)throw Error('Sessão encerrada.');renderProposalBudget(data);proposalBudgetData=data}
     catch(error){proposalBudgetData=null;$('proposalBuilderPreview').replaceChildren();setProposalDownloadsDisabled(true);$('proposalBuilderMessage').textContent=error.message||'Não foi possível ler o JSON.'}
   });
-  $('requestsList').addEventListener('click',async ev=>{const exportButton=ev.target.closest('[data-export-quote]');if(exportButton){downloadPortalQuoteJson(exportButton.dataset.exportQuote);return}const statusButton=ev.target.closest('[data-quote-status]');if(statusButton){if(user?.role!=='admin')return;const q=db.quotes.find(item=>String(item.id)===statusButton.dataset.quoteId),status=statusButton.dataset.quoteStatus;if(!q||!['em-analise','enviado'].includes(status)||q.status===status)return;const previous=q.status;q.status=status;if(!await persist()){q.status=previous;renderRequests();return}renderRequests();notify(status==='enviado'?'Proposta marcada como enviada.':'Solicitação marcada em análise.');return}const download=ev.target.closest('[data-third-download]');if(download){const file=db.quoteAttachments?.[Number(download.dataset.thirdDownload)]?.[Number(download.dataset.fileIndex)];if(!file)return;const url=URL.createObjectURL(new Blob([file.data],{type:file.type||'application/octet-stream'})),link=document.createElement('a');link.href=url;link.download=file.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),10000);return}const row=ev.target.closest('[data-quote-client]');if(row){selectedQuoteClient=row.dataset.quoteClient;renderRequests();return}if(ev.target.closest('[data-quote-back]')){selectedQuoteClient=null;renderRequests()}});
+  $('requestsList').addEventListener('click',async ev=>{const exportButton=ev.target.closest('[data-export-quote]');if(exportButton){downloadPortalQuoteJson(exportButton.dataset.exportQuote);return}const statusButton=ev.target.closest('[data-quote-status]');if(statusButton){if(user?.role!=='admin')return;const q=db.quotes.find(item=>String(item.id)===statusButton.dataset.quoteId),status=statusButton.dataset.quoteStatus;if(!q||!['em-analise','enviado'].includes(status)||q.status===status)return;const previous=q.status,previousSentAt=q.sentAt;q.status=status;if(status==='enviado')q.sentAt=new Date().toISOString();else delete q.sentAt;if(!await persist()){q.status=previous;if(previousSentAt===undefined)delete q.sentAt;else q.sentAt=previousSentAt;renderRequests();return}renderRequests();notify(status==='enviado'?'Proposta marcada como enviada. A solicitação ficará visível por 30 dias.':'Solicitação marcada em análise.');return}const download=ev.target.closest('[data-third-download]');if(download){const file=db.quoteAttachments?.[Number(download.dataset.thirdDownload)]?.[Number(download.dataset.fileIndex)];if(!file)return;const url=URL.createObjectURL(new Blob([file.data],{type:file.type||'application/octet-stream'})),link=document.createElement('a');link.href=url;link.download=file.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),10000);return}const row=ev.target.closest('[data-quote-client]');if(row){selectedQuoteClient=row.dataset.quoteClient;renderRequests();return}if(ev.target.closest('[data-quote-back]')){selectedQuoteClient=null;renderRequests()}});
   $('thirdFiles').disabled=true;
   $('loginForm').insertAdjacentHTML('afterend','<button id="resetPassword" type="button" class="btn secondary" style="margin-top:10px">Esqueci minha senha</button>');
   $('resetPassword').addEventListener('click',async()=>{const email=$('loginEmail').value.trim();if(!email){$('loginError').textContent='Informe seu e-mail acima para receber a redefinição de senha.';return}try{await sendPasswordResetEmail(auth,email);$('loginError').textContent='Se esta conta estiver cadastrada, você receberá um e-mail para redefinir a senha.'}catch(error){console.error(error);$('loginError').textContent='Não foi possível enviar o e-mail agora. Tente novamente.'}});
@@ -1632,14 +1660,14 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     manualProposalRequest=null;manualProposalItems=[];
     for(const field of document.querySelectorAll('#page-manual-proposal input'))if(field.id!=='manualQuantity')field.value='';
     $('manualQuantity').value='1';
-    user=null;firebaseUser=authenticated;cart={};cartSpecs={};db=emptyDb();savedDb=null;
+    user=null;firebaseUser=authenticated;cart={};cartSpecs={};db=emptyDb();savedDb=null;lastVisibleQuoteIds=null;
     document.body.classList.remove('role-admin','role-client');$('loginScreen').classList.remove('hidden');$('loginPassword').value='';
     if(!authenticated){$('loginError').textContent='';return}
     $('loginError').textContent='Carregando seu acesso...';
     try{
       const profileSnap=await getDoc(doc(firestore,'portalUsers',authenticated.uid));
       if(!profileSnap.exists()||!['admin','client'].includes(profileSnap.data().role))throw Error('Acesso não cadastrado no portal. Peça à equipe CARTAMAC para liberar sua conta.');
-      const profile=profileSnap.data();await loadPortalData(profile);savedDb=structuredClone(db);$('loginError').textContent='';enter(profile);
+      const profile=profileSnap.data();await loadPortalData(profile);try{await reconcileOldQuotes()}catch(error){console.warn('Não foi possível atualizar as solicitações antigas:',error)}savedDb=structuredClone(db);$('loginError').textContent='';enter(profile);
     }catch(error){console.error(error);await signOut(auth);$('loginError').textContent=error.message||'Não foi possível carregar sua conta.'}
   });
 })();
