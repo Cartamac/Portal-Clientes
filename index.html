@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="icon" type="image/png" href="./cartamac-favicon.png">
-<title>CARTAMAC | Portal do Cliente | rev027</title>
+<title>CARTAMAC | Portal do Cliente | rev037</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     :root{--bg:#0d0d0d;--bg2:#121212;--bg3:#1a1a1a;--bg4:#222;--border:#2a2a2a;--border2:#383838;--text:#ececec;--muted:#999;--gold:#c8a84b;--green:#5cb85c;--red:#e05252;--radius:10px}
@@ -331,6 +331,94 @@
     #page-catalog-admin .catalog-order-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:0 16px 15px}
     #page-catalog-admin .catalog-order-actions .small-note{margin:0}
     @media(max-width:600px){#page-catalog-admin .catalog-order-item{grid-template-columns:26px minmax(0,1fr) 83px;gap:7px}#page-catalog-admin .catalog-order-panel{padding:16px}}
+  
+    #page-client-list .client-directory-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:20px 0}
+    #page-client-list .client-directory-toolbar .field{width:min(100%,420px)}
+    #page-client-list .client-directory-count{color:var(--muted);font-size:12px}
+    #page-client-list .client-directory{display:grid;gap:18px}
+    #page-client-list .client-directory-card{padding:22px}
+    #page-client-list .client-directory-head{display:flex;align-items:start;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-bottom:17px;border-bottom:1px solid var(--border)}
+    #page-client-list .client-directory-head h2{margin:0 0 5px;font-size:19px;overflow-wrap:anywhere}
+    #page-client-list .client-directory-head small{color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+    #page-client-list .client-directory-section{padding-top:18px}
+    #page-client-list .client-directory-section h3{margin:0 0 12px;font-size:14px}
+    #page-client-list .client-directory-equipment{display:flex;gap:8px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+    #page-client-list .client-directory-equipment li{padding:8px 10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg2);font-size:12px;line-height:1.4}
+    #page-client-list .client-directory-empty{margin:0;color:var(--muted);font-size:12px}
+    #page-client-list .client-directory-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+    #page-client-list .client-directory-section-head h3{margin:0}
+    #page-client-list .client-directory-manual{display:grid;gap:10px}
+    #page-client-list .client-directory-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:end}
+    #page-client-list .client-directory-row label{display:grid;gap:6px;font-size:11px;color:var(--muted)}
+    #page-client-list .client-directory-row .field{width:100%}
+    #page-client-list .client-directory-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:14px}
+    #page-client-list .client-directory-message{margin:0;color:var(--muted);font-size:12px}
+    @media(max-width:680px){#page-client-list .client-directory-row{grid-template-columns:1fr}#page-client-list .client-directory-row .btn{justify-self:start}}
+  
+    #page-client-list .client-directory-table-wrap{margin-top:18px;overflow-x:auto;border:1px solid var(--border2);border-radius:8px}
+    #page-client-list .client-directory-table{width:100%;min-width:680px;border-collapse:collapse;table-layout:fixed;font-size:12px}
+    #page-client-list .client-directory-table col:first-child{width:56%}
+    #page-client-list .client-directory-table col:nth-child(2){width:30%}
+    #page-client-list .client-directory-table col:nth-child(3){width:14%}
+    #page-client-list .client-directory-table th,#page-client-list .client-directory-table td{padding:11px 14px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--border2);overflow-wrap:anywhere}
+    #page-client-list .client-directory-table thead th{background:#303030;color:#f7f7f7;font-size:11px;letter-spacing:.25px}
+    #page-client-list .client-directory-table tbody tr:nth-child(even):not(.directory-group-row){background:#191919}
+    #page-client-list .client-directory-table tbody tr:last-child td{border-bottom:0}
+    #page-client-list .client-directory-table .directory-group-row th{padding:11px 14px;background:#242016;color:var(--gold);font-size:12px;font-weight:800;border-top:1px solid var(--border2)}
+    #page-client-list .client-directory-table .directory-group-row:first-child th{border-top:0}
+    #page-client-list .client-directory-table .directory-source{color:var(--muted);font-weight:700}
+    #page-client-list .client-directory-table .directory-empty-cell{color:var(--muted)}
+    #page-client-list .client-directory-table .client-directory-row .field{width:100%;min-height:39px}
+    #page-client-list .client-directory-table .client-directory-manual{display:table-row-group}
+    #page-client-list .client-directory-table .client-directory-row{display:table-row}
+    #page-client-list .client-directory-table .client-directory-row td{padding:7px 10px}
+    #page-client-list .client-directory-table .client-directory-row .btn{width:100%;min-height:39px;justify-content:center}
+    #page-client-list .client-directory-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+    #page-client-list .client-directory-actions .client-directory-message{flex-basis:100%;margin-top:2px}
+  
+    #page-client-list .client-directory-toolbar{justify-content:flex-start}
+    #page-client-list .client-directory-toolbar .field[type="search"]{flex:1 1 330px}
+    #page-client-list .client-directory-toolbar select.field{width:auto;min-width:185px;max-width:100%}
+    #page-client-list .client-directory-toolbar .client-directory-count{margin-left:auto}
+    #page-client-list .client-directory-card{padding:0;overflow:hidden}
+    #page-client-list .client-directory-card>summary{display:flex;align-items:center;gap:16px;list-style:none;padding:20px 22px;cursor:pointer}
+    #page-client-list .client-directory-card>summary::-webkit-details-marker{display:none}
+    #page-client-list .client-directory-card>summary:focus-visible{outline:2px solid var(--gold);outline-offset:-3px}
+    #page-client-list .client-directory-card>summary:hover{background:#1b1b1b}
+    #page-client-list .client-directory-card>summary .client-directory-summary-text{flex:1;min-width:0}
+    #page-client-list .client-directory-card>summary .client-directory-summary-meta{color:var(--muted);font-size:12px;white-space:nowrap}
+    #page-client-list .client-directory-card>summary .client-directory-chevron{color:var(--gold);font-size:20px;line-height:1;transition:transform .2s}
+    #page-client-list .client-directory-card[open]>summary .client-directory-chevron{transform:rotate(180deg)}
+    #page-client-list .client-directory-body{padding:0 22px 22px;border-top:1px solid var(--border)}
+    #page-client-list .client-directory-body-actions{display:flex;justify-content:flex-end;margin-top:16px}
+    #page-client-list .client-directory-table-wrap{margin-top:16px}
+    #page-client-list .client-directory-table .directory-source{color:#d4d4d4}
+    @media(max-width:680px){#page-client-list .client-directory-card>summary{flex-wrap:wrap}#page-client-list .client-directory-card>summary .client-directory-summary-meta{order:3;width:100%}#page-client-list .client-directory-toolbar .client-directory-count{margin-left:0;width:100%}}
+  
+    #page-client-list .client-directory-inner-filter{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+    #page-client-list .client-directory-inner-filter input{flex:1 1 260px;width:auto;min-width:0}
+    #page-client-list .client-directory-inner-filter select{width:220px;max-width:100%}
+    #page-client-list .client-directory-table-wrap{margin-top:12px}
+    #page-client-list .client-directory-table .client-directory-row td{padding:10px 14px}
+    #page-client-list .client-directory-table tr[hidden]{display:none!important}
+    #page-client-list .client-directory-remove{display:inline-grid;place-items:center;width:28px;height:28px;border:1px solid var(--border2);border-radius:5px;background:transparent;color:#ddd;font-size:18px;line-height:1;cursor:pointer}
+    #page-client-list .client-directory-remove:hover{border-color:#e46b6b;color:#ff9292}
+    #page-client-list .client-directory-add-form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto;gap:10px;align-items:end;margin-top:16px;padding:14px;border:1px solid var(--border2);border-radius:8px;background:var(--bg2)}
+    #page-client-list .client-directory-add-form[hidden]{display:none!important}
+    #page-client-list .client-directory-add-form label{display:grid;gap:6px;color:var(--muted);font-size:11px}
+    #page-client-list .client-directory-add-form .field{width:100%}
+    @media(max-width:720px){#page-client-list .client-directory-add-form{grid-template-columns:1fr 1fr}#page-client-list .client-directory-add-form label{grid-column:1/-1}}
+  
+    #page-manual-proposal .manual-budget-import{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 18px;padding:14px;border:1px solid var(--border2);border-radius:8px;background:var(--bg2)}
+    #page-manual-proposal .manual-budget-import .small-note{flex:1 1 240px;margin:0}
+    #page-manual-proposal .manual-budget-import-status{flex-basis:100%;margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+    #page-manual-proposal .manual-item-price{color:var(--gold)!important}
+  
+    .topbar .nav .nav-divider{display:block;align-self:center;flex:none;width:1px;height:36px;margin:0 10px;background:#8a8a8a}
+    #page-users .user-list-head{gap:8px}
+    #page-users .user-list-head h2{margin-right:auto;min-width:0}
+    #page-users .user-list-head .btn{padding:8px 10px;min-height:38px;font-size:12px;white-space:nowrap}
+    @media(max-width:620px){.topbar .nav .nav-divider{height:28px;margin:0 5px}}
   </style>
 </head>
 <body>
@@ -356,10 +444,20 @@
       <button type="button" data-page="requests" class="admin-only"><svg class="tab-icon" aria-hidden="true"><use href="#icon-request"/></svg>Orçamentos recebidos</button>
       <button type="button" data-page="catalog-admin" class="admin-only"><svg class="tab-icon" aria-hidden="true"><use href="#icon-catalog"/></svg>Catálogo de peças</button>
        <button type="button" data-page="manual-proposal" class="admin-only"><svg class="tab-icon" aria-hidden="true"><use href="#icon-request"/></svg>Criar proposta</button>
+      <span class="nav-divider admin-only" aria-hidden="true"></span>
+      <button type="button" data-page="client-list" class="admin-only"><svg class="tab-icon" aria-hidden="true"><use href="#icon-users"/></svg>Lista de clientes</button>
     </nav>
     <span id="signedUser" class="signed-user"></span><button type="button" id="logout" class="ghost">Sair</button>
   </header>
-  <script>document.querySelector('.brand-logo').src=document.querySelector('.login-logo').src;</script>
+  <script>
+    document.querySelector('.brand-logo').src=document.querySelector('.login-logo').src;
+    window.__portalLoginReady=false;
+    document.querySelector('#loginForm').addEventListener('submit',event=>{
+      if(window.__portalLoginReady)return;
+      event.preventDefault();
+      document.querySelector('#loginError').textContent='O portal não terminou de carregar. Verifique a conexão e atualize a página.';
+    });
+  </script>
   <main class="shell">
     <section id="page-schedule" class="page active">
       <div class="eyebrow">Seus pedidos</div><h1 class="page-title">Acompanhamento</h1>
@@ -397,7 +495,7 @@
     </section>
     <section id="page-users" class="page admin-only" aria-label="Clientes e usuários">
       <div class="user-tabs"><button type="button" class="btn" data-user-filter="client"><svg class="tab-icon" aria-hidden="true"><use href="#icon-users"/></svg>Clientes</button><button type="button" class="btn secondary" data-user-filter="admin"><svg class="tab-icon" aria-hidden="true"><use href="#icon-admin"/></svg>Administradores</button><button type="button" class="btn secondary" data-user-filter="imports"><svg class="tab-icon" aria-hidden="true"><use href="#icon-calendar"/></svg>Importar cronograma</button></div>
-      <div id="usersManagement" class="user-admin-layout"><div class="panel user-list-panel"><div class="user-list-head"><h2 id="usersListTitle">Clientes</h2><button id="newUserBtn" class="btn" type="button">+ Novo</button></div><div class="user-list-search"><input id="userSearch" class="field" type="search" placeholder="Pesquisar cliente ou e-mail" aria-label="Pesquisar clientes"></div><div id="usersList"></div></div><form id="userForm" class="panel user-detail-form">
+      <div id="usersManagement" class="user-admin-layout"><div class="panel user-list-panel"><div class="user-list-head"><h2 id="usersListTitle">Clientes</h2><button id="exportClientsExcel" class="btn secondary" type="button" title="Exportar dados dos clientes em Excel" aria-label="Exportar dados dos clientes em Excel">Excel ↓</button><button id="newUserBtn" class="btn" type="button">+ Novo</button></div><div class="user-list-search"><input id="userSearch" class="field" type="search" placeholder="Pesquisar cliente ou e-mail" aria-label="Pesquisar clientes"></div><div id="usersList"></div></div><form id="userForm" class="panel user-detail-form">
   <h2 id="userFormTitle">Novo cliente</h2><p class="user-form-intro">Um acesso por empresa. Os contatos cadastrados serão exibidos na proposta.</p>
   <input id="userId" type="hidden"><input id="userRole" type="hidden" value="client">
   <nav id="userClientTabs" class="user-client-tabs" aria-label="Dados do cliente"><button type="button" data-user-tab="profile" class="active" aria-selected="true">Login e dados da proposta</button><button type="button" data-user-tab="equipment" aria-selected="false">Equipamentos</button></nav>
@@ -425,21 +523,27 @@
     <section id="page-requests" class="page admin-only">
       <div class="eyebrow">Administração</div><h1 class="page-title">Solicitações de orçamento</h1><p class="lede">Selecione um cliente para consultar todas as solicitações registradas neste navegador.</p><div id="requestsList"></div>
     </section>
+    <section id="page-client-list" class="page admin-only" aria-label="Lista de clientes">
+      <div class="eyebrow">Administração</div><h1 class="page-title">Lista de clientes</h1>
+      <p class="lede">Consulte os equipamentos CARTAMAC vinculados a cada empresa e registre equipamentos de outros fornecedores.</p>
+      <div class="client-directory-toolbar"><input id="clientDirectorySearch" class="field" type="search" placeholder="Buscar empresa, equipamento ou fornecedor" aria-label="Buscar empresa, equipamento ou fornecedor"><select id="clientDirectoryFilter" class="field" aria-label="Filtrar clientes por equipamento"><option value="all">Todos os clientes</option><option value="cartamac">Com CARTAMAC</option><option value="external">Com outros fornecedores</option><option value="none">Sem equipamentos</option></select><select id="clientDirectorySort" class="field" aria-label="Ordenar clientes"><option value="name">Nome: A a Z</option><option value="name-desc">Nome: Z a A</option><option value="equipment">Mais equipamentos</option></select><span id="clientDirectoryCount" class="client-directory-count"></span></div>
+      <div id="clientDirectory" class="client-directory"></div>
+    </section>
     <section id="page-manual-proposal" class="page admin-only" aria-label="Criar proposta avulsa">
-      <div class="eyebrow">Administração</div><h1 class="page-title">Criar proposta</h1><p class="lede">Monte uma proposta para uma solicitação recebida fora do portal. Escolha as peças do catálogo; as fotos e descrições cadastradas entram na proposta técnica.</p>
+      <div class="eyebrow">Administração</div><h1 class="page-title">Criar proposta</h1><p class="lede">Monte uma proposta para uma solicitação recebida fora do portal. Importe o JSON da formação de preço ou selecione peças do catálogo; as fotos e descrições cadastradas entram na proposta técnica.</p>
       <div class="manual-proposal-layout"><div class="panel admin-form"><h2>Destinatário</h2><div class="form-group"><label for="manualRegisteredClient">Cliente cadastrado</label><select id="manualRegisteredClient" class="field"><option value="">Preencher manualmente</option></select><small class="small-note">Selecione um cliente para preencher os dados abaixo. Você pode ajustá-los para esta proposta.</small></div><div class="form-grid">
         <div class="form-group"><label for="manualCompany">Empresa *</label><input id="manualCompany" class="field" autocomplete="organization"></div>
         <div class="form-group wide"><label for="manualAddress">Endereço da empresa *</label><input id="manualAddress" class="field"></div>
         <div class="form-group"><label for="manualCity">Cidade / UF *</label><input id="manualCity" class="field"></div>
         <div class="form-group"><label for="manualCompanyPhone">Telefone da empresa</label><input id="manualCompanyPhone" class="field" type="tel"></div>
         <div class="form-group wide"><label>Contatos pessoais</label><div id="manualExtraContacts" class="proposal-extra-contacts"></div><button id="manualAddContact" class="btn secondary" type="button">+ Adicionar contato</button></div><div class="form-group wide"><label for="manualReference">Referência</label><input id="manualReference" class="field" placeholder="Ex.: Solicitação por e-mail de 28/10/2026"></div>
-      </div></div><div class="panel admin-form"><h2>Peças da proposta</h2><div class="manual-pick-grid">
+      </div></div><div class="panel admin-form"><h2>Peças da proposta</h2><div class="manual-budget-import"><button id="manualImportBudgetButton" class="btn secondary" type="button">Importar JSON da formação de preço</button><input id="manualImportBudgetFile" type="file" accept=".json,.cartamac-orcamento.json,application/json" hidden aria-label="Arquivo JSON da formação de preço"><p class="small-note">Carrega peças, quantidades e valores calculados para esta proposta.</p><p id="manualImportBudgetStatus" class="manual-budget-import-status" role="status">Nenhum orçamento importado.</p></div><div class="manual-pick-grid">
         <div class="form-group"><label for="manualEquipment">Equipamento</label><select id="manualEquipment" class="field"></select></div>
         <div class="form-group"><label for="manualPart">Peça</label><select id="manualPart" class="field"></select></div>
         <div class="form-group"><label for="manualQuantity">Quantidade</label><input id="manualQuantity" class="field" type="number" min="1" max="100000" step="1" value="1"></div>
         <div class="form-group wide"><label for="manualSpecification">Especificação da peça</label><input id="manualSpecification" class="field" maxlength="160" placeholder="Ex.: furo Ø12 mm"></div>
       </div><div id="manualPartPreview" class="manual-part-preview small-note"></div><button id="manualAddPart" class="btn secondary" type="button">Adicionar peça</button><div id="manualItems" class="manual-items"></div></div></div>
-      <div class="panel admin-form manual-proposal-footer"><div><h2>Gerar proposta</h2><p class="small-note">A seleção e os dados preenchidos ficam somente neste navegador. No gerador, importe o JSON da formação de preço para conferir os valores antes de baixar a proposta.</p></div><button id="manualOpenProposal" class="btn" type="button">Abrir proposta</button></div>
+      <div class="panel admin-form manual-proposal-footer"><div><h2>Gerar proposta</h2><p class="small-note">A seleção e os dados preenchidos ficam somente neste navegador. Importe o JSON da formação de preço acima para preencher as peças e os valores. Confira tudo na prévia antes de baixar.</p></div><button id="manualOpenProposal" class="btn" type="button">Abrir proposta</button></div>
     </section>
     <section id="page-catalog-admin" class="page admin-only">
       <div class="eyebrow">Administração</div><h1 class="page-title">Catálogo de peças</h1><p class="lede">Cadastre equipamentos e peças; acrescente descrições e fotos para ajudar o cliente a identificar o item correto.</p><p class="notice">Cadastros e descrições são compartilhados pelo Firebase entre usuários autorizados.</p>
@@ -589,10 +693,11 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function partSpecificationField(k,details){const prompt=String(details.specificationPrompt||details.description||'Ex.: furo Ø12mm, fenda 0,15mm').trim();return details.allowSpecification?`<label class="part-spec-field">Especificação desta peça *<input class="field" type="text" maxlength="160" data-part-spec="${k}" value="${esc(cartSpecs[k]||'')}" placeholder="${esc(prompt)}" aria-label="Especificação de ${esc(catalog[Number(k.split(':')[0])]?.parts[Number(k.split(':')[1])]||'peça')}"></label>`:''}
   function updateCount(){const n=Object.keys(cart).length;$('cartCount').textContent=n;$('cartCount').hidden=!n}
   function hidePreview(){pendingRequest=null;$('resultBlock').style.display='none';$('sendStatus').textContent=''}
-  function page(name){if(name==='manage-orders'){name='users';userFilter='imports'}if(user?.role==='admin'&&!['users','requests','catalog-admin','manual-proposal'].includes(name))return;if(user?.role==='client'&&!['schedule','catalog','catalog-cartamac','catalog-thirdparty','quote','history'].includes(name))return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+name));document.querySelectorAll('.nav button[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===(name.startsWith('catalog-')?'catalog':name)));if(name==='catalog-cartamac')showCatalogStageChooser();if(name==='quote')renderQuote();if(name==='history'){renderClientHistory();refreshClientHistory()}if(name==='schedule')renderOrders();if(name==='users')renderUsers();if(name==='requests')renderRequests();if(name==='catalog-admin')renderCatalogAdmin();if(name==='manual-proposal')renderManualProposal();window.scrollTo(0,0)}
+  function page(name){if(name==='manage-orders'){name='users';userFilter='imports'}if(user?.role==='admin'&&!['users','client-list','requests','catalog-admin','manual-proposal'].includes(name))return;if(user?.role==='client'&&!['schedule','catalog','catalog-cartamac','catalog-thirdparty','quote','history'].includes(name))return;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+name));document.querySelectorAll('.nav button[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===((name==='catalog-cartamac'||name==='catalog-thirdparty')?'catalog':name)));if(name==='catalog-cartamac')showCatalogStageChooser();if(name==='quote')renderQuote();if(name==='history'){renderClientHistory();refreshClientHistory()}if(name==='schedule')renderOrders();if(name==='users')renderUsers();if(name==='client-list')renderClientDirectory();if(name==='requests')renderRequests();if(name==='catalog-admin')renderCatalogAdmin();if(name==='manual-proposal')renderManualProposal();window.scrollTo(0,0)}
   document.querySelectorAll('[data-page],[data-go]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.page==='requests')selectedQuoteClient=null;page(btn.dataset.page||btn.dataset.go)}));
   function enter(account){user=account;document.body.classList.remove('role-admin','role-client');document.body.classList.add('role-'+account.role);$('signedUser').textContent=account.company||account.name;$('loginScreen').classList.add('hidden');hidePreview();pendingThirdParty=null;thirdMessage='';$('thirdResultBlock').classList.add('hidden');$('thirdPartyForm').reset();$('thirdFilesList').innerHTML='';$('contactName').value=account.contacts?.[0]?.name||'';$('company').value=account.company||'';$('email').value=account.contacts?.[0]?.email||'';$('phone').value=account.contacts?.[0]?.phone||'';$('thirdContactName').value='';$('thirdCompany').value=account.company||'';loadCart();renderCatalog();page(account.role==='admin'?'users':'schedule')}
-  $('loginForm').addEventListener('submit',async ev=>{ev.preventDefault();$('loginError').textContent='Entrando...';try{await signInWithEmailAndPassword(auth,$('loginEmail').value.trim(),$('loginPassword').value)}catch(error){console.error(error);$('loginError').textContent='Não foi possível entrar. Confira o e-mail e a senha.'}});
+  let authFailureMessage='';
+  $('loginForm').addEventListener('submit',async ev=>{ev.preventDefault();authFailureMessage='';$('loginError').textContent='Entrando...';try{await signInWithEmailAndPassword(auth,$('loginEmail').value.trim(),$('loginPassword').value)}catch(error){console.error(error);authFailureMessage=error.code==='auth/invalid-credential'?'E-mail ou senha incorretos.':'Não foi possível entrar. '+(error.code||'Confira sua conexão e tente novamente.');$('loginError').textContent=authFailureMessage}});
   $('logout').addEventListener('click',async()=>{await signOut(auth)});
   let userFilter='client';
   // O mesmo pedido pode ser atribuído a mais de um acesso, sem retirar o vínculo anterior.
@@ -771,8 +876,8 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
       for(const index of available)if(!current.includes(index))current.push(index);
       catalogOrderDraft.set(stage,current);
     }
-    root.innerHTML=stageOrder.map((stage,groupIndex)=>{
-      const ids=catalogOrderDraft.get(stage),expanded=open.size?open.has(stage):groupIndex===0;
+    root.innerHTML=stageOrder.map(stage=>{
+      const ids=catalogOrderDraft.get(stage),expanded=open.has(stage);
       return `<details class="catalog-order-group" data-order-stage="${stage}" ${expanded?'open':''}><summary><span>${esc(stage)}</span><small>${ids.length} equipamento(s)</small></summary><div class="catalog-order-items">${ids.length?ids.map((index,position)=>`<div class="catalog-order-item"><span class="catalog-order-position">${position+1}</span><strong>${esc(catalog[index].equipment)}</strong><label>Posição <select class="field" data-order-index="${index}" data-order-group="${stage}">${ids.map((_,target)=>`<option value="${target}" ${target===position?'selected':''}>${target+1}</option>`).join('')}</select></label></div>`).join(''):'<p class="small-note">Nenhum equipamento nesta seção.</p>'}</div><div class="catalog-order-actions"><button type="button" class="btn secondary" data-save-order="${stage}" ${ids.length?'':'disabled'}>Salvar ordem desta seção</button><span data-order-message="${stage}" class="small-note" role="status"></span></div></details>`;
     }).join('');
   }
@@ -972,6 +1077,85 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   });
 
   function renderUsers(){if(user?.role!=='admin')return;const imports=userFilter==='imports',query=norm($('userSearch').value.trim());$('usersManagement').classList.toggle('hidden',imports);$('usersImports').classList.toggle('hidden',!imports);document.querySelectorAll('[data-user-filter]').forEach(b=>b.classList.toggle('secondary',b.dataset.userFilter!==userFilter));if(imports){renderAdminOrders();return}$('usersListTitle').textContent=userFilter==='client'?'Clientes':'Administradores';$('userSearch').placeholder=userFilter==='client'?'Pesquisar cliente ou e-mail':'Pesquisar administrador ou e-mail';$('usersList').innerHTML=db.users.filter(u=>u.role===userFilter&&(!query||norm(`${u.name} ${u.company||''} ${u.email}`).includes(query))).map(u=>`<button type="button" class="user-row ${Number($('userId').value)===u.id?'active':''}" data-edit-user="${u.id}"><span class="user-avatar">${esc((u.name||'?').split(/\s+/).slice(0,2).map(p=>p[0]).join('').toUpperCase())}</span><span class="user-row-info"><b>${esc(u.role==='client'?u.company||u.name:u.name)}</b><small>${esc(u.email)}</small></span><span class="user-badge ${u.role==='admin'?'admin':''}">${u.role==='admin'?'Admin':'Cliente'}</span></button>`).join('')||'<div class="empty">Nenhum acesso encontrado.</div>';renderUserLinks()}
+  function clientDirectoryRow(entry={}){
+    const row=document.createElement('tr');row.className='client-directory-row directory-equipment-row';
+    row.dataset.directoryEquipment=entry.equipment||'';row.dataset.directorySupplier=entry.supplier||'';
+    const equipment=document.createElement('td'),supplier=document.createElement('td'),action=document.createElement('td');
+    equipment.textContent=entry.equipment||'';supplier.textContent=entry.supplier||'';
+    action.innerHTML='<button class="client-directory-remove" type="button" data-directory-remove aria-label="Excluir equipamento">×</button>';
+    row.append(equipment,supplier,action);return row;
+  }
+  function updateClientDirectoryTable(card){
+    const rows=[...card.querySelectorAll('.directory-equipment-row')],placeholder=card.querySelector('.directory-empty-row');
+    if(placeholder)placeholder.remove();
+    if(!rows.length)card.querySelector('.client-directory-manual').innerHTML='<tr class="directory-empty-row"><td colspan="3" class="directory-empty-cell">Nenhum equipamento cadastrado.</td></tr>';
+    const select=card.querySelector('[data-directory-supplier-filter]'),previous=select.value;
+    const suppliers=[...new Set(rows.map(row=>row.dataset.directorySupplier).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+    select.innerHTML='<option value="">Todos os fornecedores</option>'+suppliers.map(supplier=>'<option value="'+esc(norm(supplier))+'">'+esc(supplier)+'</option>').join('');
+    if([...select.options].some(option=>option.value===previous))select.value=previous;
+    const count=rows.length;card.querySelector('.client-directory-summary-meta').textContent=count+' equipamento(s)';
+    applyClientDirectoryFilter(card);
+  }
+  function applyClientDirectoryFilter(card){
+    const search=norm(card.querySelector('[data-directory-search]').value.trim()),supplier=card.querySelector('[data-directory-supplier-filter]').value;
+    const rows=[...card.querySelectorAll('.directory-equipment-row')];let shown=0;
+    for(const row of rows){
+      const match=(!search||norm(row.dataset.directoryEquipment+' '+row.dataset.directorySupplier).includes(search))&&(!supplier||norm(row.dataset.directorySupplier)===supplier);
+      row.hidden=!match;if(match)shown++;
+    }
+    const empty=card.querySelector('.directory-empty-row');if(empty)empty.hidden=!!search||!!supplier;
+    card.querySelector('.client-directory-filter-count').textContent=(search||supplier)?shown+' de '+rows.length+' equipamento(s)':'';
+  }
+  function renderClientDirectory(){
+    if(user?.role!=='admin')return;
+    const root=$('clientDirectory'),open=new Set([...root.querySelectorAll('.client-directory-card[open]')].map(card=>card.dataset.directoryClient));
+    const search=norm($('clientDirectorySearch').value.trim()),filter=$('clientDirectoryFilter').value,sort=$('clientDirectorySort').value;
+    const clients=db.users.filter(account=>account.role==='client');
+    const hasCartamac=account=>(account.equipmentIds||[]).length>0;
+    const hasExternal=account=>(account.additionalEquipment||[]).length>0;
+    const visible=clients.filter(account=>{
+      if(filter==='cartamac'&&!hasCartamac(account)||filter==='external'&&!hasExternal(account)||filter==='none'&&(hasCartamac(account)||hasExternal(account)))return false;
+      return !search||norm([account.company,account.name,account.email,...(account.equipmentIds||[]).map(id=>catalog[Number(id)]?.equipment||''),...(account.additionalEquipment||[]).flatMap(item=>[item.equipment,item.supplier])].join(' ')).includes(search);
+    });
+    const byName=(a,b)=>String(a.company||a.name||'').localeCompare(String(b.company||b.name||''),'pt-BR');
+    visible.sort(sort==='name-desc'?(a,b)=>-byName(a,b):sort==='equipment'?(a,b)=>((b.equipmentIds||[]).length+(b.additionalEquipment||[]).length)-((a.equipmentIds||[]).length+(a.additionalEquipment||[]).length)||byName(a,b):byName);
+    $('clientDirectoryCount').textContent=visible.length+' de '+clients.length+' cliente(s)';root.replaceChildren();
+    if(!visible.length){root.innerHTML='<div class="panel empty">Nenhum cliente encontrado.</div>';return}
+    for(const account of visible){
+      const card=document.createElement('details');card.className='panel client-directory-card';card.dataset.directoryClient=String(account.id);card.open=open.has(String(account.id));
+      const names=[...new Set((account.equipmentIds||[]).map(id=>Number(id)).filter(Number.isInteger))].map(id=>catalog[id]?.equipment||'Equipamento removido do catálogo');
+      const external=Array.isArray(account.additionalEquipment)?account.additionalEquipment:[];
+      card.innerHTML='<summary><span class="client-directory-summary-text"><h2>'+esc(account.company||account.name||'Empresa sem nome')+'</h2><small>'+esc(account.email||'')+'</small></span><span class="client-directory-summary-meta"></span><span class="client-directory-chevron" aria-hidden="true">⌄</span></summary><div class="client-directory-body"><div class="client-directory-body-actions"><button class="btn secondary" type="button" data-directory-edit="'+esc(account.id)+'">Editar cadastro</button></div><div class="client-directory-inner-filter"><input class="field" type="search" data-directory-search placeholder="Buscar equipamento ou fornecedor" aria-label="Buscar equipamento ou fornecedor deste cliente"><select class="field" data-directory-supplier-filter aria-label="Filtrar por fornecedor"></select><span class="client-directory-filter-count client-directory-count" role="status"></span></div><div class="client-directory-table-wrap"><table class="client-directory-table"><colgroup><col><col><col></colgroup><thead><tr><th scope="col">Equipamento</th><th scope="col">Fornecedor</th><th scope="col">Ação</th></tr></thead><tbody class="client-directory-cartamac">'+names.map(name=>'<tr class="directory-equipment-row" data-directory-supplier="CARTAMAC" data-directory-equipment="'+esc(name)+'"><td>'+esc(name)+'</td><td class="directory-source">CARTAMAC</td><td>—</td></tr>').join('')+'</tbody><tbody class="client-directory-manual"></tbody></table></div><form class="client-directory-add-form" data-directory-add-form hidden><label>Equipamento<input class="field" data-directory-new-equipment maxlength="160" required placeholder="Nome do equipamento"></label><label>Fornecedor<input class="field" data-directory-new-supplier maxlength="160" required placeholder="Nome do fornecedor"></label><button class="btn" type="submit">Adicionar à lista</button><button class="btn secondary" type="button" data-directory-cancel>Cancelar</button></form><div class="client-directory-actions"><button class="btn secondary" type="button" data-directory-add>+ Adicionar equipamento</button><button class="btn" type="button" data-directory-save>Salvar equipamentos</button><p class="client-directory-message" role="status"></p></div></div>';
+      for(const entry of external)card.querySelector('.client-directory-manual').append(clientDirectoryRow(entry));
+      root.append(card);updateClientDirectoryTable(card);
+    }
+  }
+  for(const id of ['clientDirectorySearch','clientDirectoryFilter','clientDirectorySort'])$(id).addEventListener(id==='clientDirectorySearch'?'input':'change',renderClientDirectory);
+  $('clientDirectory').addEventListener('input',event=>{const card=event.target.closest('.client-directory-card');if(card&&event.target.matches('[data-directory-search]'))applyClientDirectoryFilter(card)});
+  $('clientDirectory').addEventListener('change',event=>{const card=event.target.closest('.client-directory-card');if(card&&event.target.matches('[data-directory-supplier-filter]'))applyClientDirectoryFilter(card)});
+  $('clientDirectory').addEventListener('submit',event=>{
+    const form=event.target.closest('[data-directory-add-form]');if(!form)return;event.preventDefault();
+    const card=form.closest('.client-directory-card'),equipment=form.querySelector('[data-directory-new-equipment]').value.trim(),supplier=form.querySelector('[data-directory-new-supplier]').value.trim();
+    if(!equipment||!supplier)return;
+    if([...card.querySelectorAll('.client-directory-row')].some(row=>norm(row.dataset.directoryEquipment+'|'+row.dataset.directorySupplier)===norm(equipment+'|'+supplier))){card.querySelector('.client-directory-message').textContent='Este equipamento e fornecedor já constam na lista.';return}
+    if(card.querySelectorAll('.client-directory-row').length>=50){card.querySelector('.client-directory-message').textContent='Limite de 50 equipamentos adicionais.';return}
+    card.querySelector('.client-directory-manual').append(clientDirectoryRow({equipment,supplier}));form.reset();form.hidden=true;
+    updateClientDirectoryTable(card);card.querySelector('.client-directory-message').textContent='Equipamento adicionado. Clique em salvar para registrar.';
+  });
+  $('clientDirectory').addEventListener('click',async event=>{
+    const card=event.target.closest('[data-directory-client]');if(!card||user?.role!=='admin')return;
+    const account=db.users.find(item=>item.role==='client'&&String(item.id)===card.dataset.directoryClient);if(!account)return;
+    if(event.target.closest('[data-directory-edit]')){userFilter='client';$('userSearch').value='';page('users');$('usersList').querySelector('[data-edit-user="'+account.id+'"]').click();return}
+    if(event.target.closest('[data-directory-add]')){const form=card.querySelector('[data-directory-add-form]');form.hidden=false;form.querySelector('[data-directory-new-equipment]').focus();return}
+    if(event.target.closest('[data-directory-cancel]')){const form=card.querySelector('[data-directory-add-form]');form.reset();form.hidden=true;return}
+    if(event.target.closest('[data-directory-remove]')){event.target.closest('.client-directory-row').remove();updateClientDirectoryTable(card);card.querySelector('.client-directory-message').textContent='Alteração pendente. Clique em salvar.';return}
+    if(!event.target.closest('[data-directory-save]'))return;
+    const entries=[...card.querySelectorAll('.client-directory-row')].map(row=>({equipment:row.dataset.directoryEquipment,supplier:row.dataset.directorySupplier}));
+    const message=card.querySelector('.client-directory-message');
+    const previous=structuredClone(db);account.additionalEquipment=entries;message.textContent='Salvando...';
+    if(!await persist()){db=previous;message.textContent='Não foi possível salvar. Tente novamente.';return}
+    message.textContent=entries.length+' equipamento(s) adicional(is) salvo(s).';notify('Lista do cliente salva');
+  });
   function companyKey(value){return norm(value).replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ')}
   function addUserContact(contact={}){const row=document.createElement('div');row.className='user-contact-row';row.innerHTML='<div class="form-group"><label>Nome<input class="field" data-user-contact-name type="text" maxlength="120" autocomplete="off"></label></div><div class="form-group"><label>E-mail<input class="field" data-user-contact-email type="email" maxlength="160" autocomplete="off"></label></div><div class="form-group"><label>Telefone<input class="field" data-user-contact-phone type="tel" maxlength="60" autocomplete="off"></label></div><button class="btn secondary" type="button" data-remove-user-contact>Retirar</button>';row.querySelector('[data-user-contact-name]').value=contact.name||'';row.querySelector('[data-user-contact-email]').value=contact.email||'';row.querySelector('[data-user-contact-phone]').value=contact.phone||'';$('userContacts').append(row)}
   function userContacts(){return [...$('userContacts').querySelectorAll('.user-contact-row')].map(row=>({name:row.querySelector('[data-user-contact-name]').value.trim(),email:row.querySelector('[data-user-contact-email]').value.trim(),phone:row.querySelector('[data-user-contact-phone]').value.trim()}))}
@@ -992,6 +1176,38 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   document.querySelectorAll('[data-user-filter]').forEach(b=>b.addEventListener('click',()=>{userFilter=b.dataset.userFilter;if(userFilter!=='imports'){$('userSearch').value='';resetUserForm()}renderUsers()}));
   $('userSearch').addEventListener('input',renderUsers);
   $('newUserBtn').addEventListener('click',resetUserForm);
+  async function exportClientsExcel(){
+    if(user?.role!=='admin')return;
+    const button=$('exportClientsExcel');button.disabled=true;button.textContent='Preparando...';
+    try{
+      if(typeof JSZip!=='function')throw Error('O gerador de Excel não carregou. Atualize a página e tente novamente.');
+      const clients=db.users.filter(account=>account.role==='client').sort((a,b)=>String(a.company||a.name||'').localeCompare(String(b.company||b.name||''),'pt-BR'));
+      const clientRows=clients.map(account=>[account.company||account.name||'',account.email||'','Não recuperável pelo Firebase',account.addressLine||'',account.cityState||'',account.companyPhone||'',String((account.contacts||[]).length)]);
+      const contactRows=clients.flatMap(account=>(Array.isArray(account.contacts)?account.contacts:[]).map(contact=>[account.company||account.name||'',account.email||'',contact.name||'',contact.email||'',contact.phone||'']));
+      const notes=[['Campo','Informação'],['Senha','O Firebase Authentication não permite consultar a senha atual. Por segurança, ela não é armazenada no cadastro nem incluída nesta planilha.'],['Login','O e-mail da aba Clientes é o login da empresa.'],['Contatos','Cada contato aparece em uma linha na aba Contatos.'],['Data da exportação',new Date().toLocaleString('pt-BR')]];
+      const zip=new JSZip();
+      const xml=value=>String(value??'').replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\ufffe\uffff]/g,'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+      const col=index=>{let result='';for(let n=index+1;n;n=Math.floor((n-1)/26))result=String.fromCharCode(65+(n-1)%26)+result;return result};
+      const sheet=(headers,rows,widths)=>{
+        const all=[headers,...rows],cells=all.map((row,r)=>'<row r="'+(r+1)+'">'+row.map((value,c)=>'<c r="'+col(c)+(r+1)+'" s="'+(r===0?1:r%2===0?2:0)+'" t="inlineStr"><is><t xml:space="preserve">'+xml(value)+'</t></is></c>').join('')+'</row>').join('');
+        const columns=widths.map((width,index)=>'<col min="'+(index+1)+'" max="'+(index+1)+'" width="'+width+'" customWidth="1"/>').join('');
+        return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols>'+columns+'</cols><sheetData>'+cells+'</sheetData><autoFilter ref="A1:'+col(headers.length-1)+Math.max(1,all.length)+'"/></worksheet>';
+      };
+      zip.file('[Content_Types].xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet3.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>');
+      zip.file('_rels/.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>');
+      zip.file('xl/workbook.xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Clientes" sheetId="1" r:id="rId1"/><sheet name="Contatos" sheetId="2" r:id="rId2"/><sheet name="Informações" sheetId="3" r:id="rId3"/></sheets></workbook>');
+      zip.file('xl/_rels/workbook.xml.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet3.xml"/><Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>');
+      zip.file('xl/styles.xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font></fonts><fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF3D3D3D"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFF3F0E5"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left/><right/><top/><bottom style="thin"><color rgb="FFD8D8D8"/></bottom><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0"/><xf numFmtId="0" fontId="0" fillId="3" borderId="1" xfId="0"/></cellXfs></styleSheet>');
+      zip.file('xl/worksheets/sheet1.xml',sheet(['Empresa','Login / E-mail','Senha','Endereço','Cidade / UF','Telefone da empresa','Nº de contatos'],clientRows,[35,34,30,55,25,24,18]));
+      zip.file('xl/worksheets/sheet2.xml',sheet(['Empresa','Login / E-mail','Nome do contato','E-mail do contato','Telefone do contato'],contactRows,[35,34,32,38,24]));
+      zip.file('xl/worksheets/sheet3.xml',sheet(notes[0],notes.slice(1),[25,105]));
+      const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:6}}),url=URL.createObjectURL(blob),link=document.createElement('a');
+      link.href=url;link.download='CARTAMAC_CLIENTES_'+new Date().toISOString().slice(0,10)+'.xlsx';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+      notify(clients.length+' cliente(s) exportado(s) para Excel.');
+    }catch(error){console.error(error);notify(error.message||'Não foi possível exportar a planilha.')}finally{button.disabled=false;button.textContent='Excel ↓'}
+  }
+  $('exportClientsExcel').addEventListener('click',exportClientsExcel);
+
   $('userForm').addEventListener('submit',async ev=>{
     ev.preventDefault();const id=Number($('userId').value),email=$('userEmail').value.trim().toLowerCase(),password=$('userPassword').value,role=$('userRole').value,isClient=role==='client',company=$('userCompany').value.trim(),contacts=isClient?userContacts():[];
     if(db.users.some(u=>u.email.toLowerCase()===email&&u.id!==id)){$('userMsg').textContent='Este e-mail já está cadastrado.';return}
@@ -1104,7 +1320,9 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     if(user?.role!=='admin')return;
     const q=db.quotes.find(item=>String(item.id)===String(id));if(!q){notify('Solicitação não encontrada.');return}
     const json=JSON.stringify(portalQuoteExportPayload(q),null,2),blob=new Blob([json],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),link=document.createElement('a');
-    link.href=url;link.download=`Solicitacao_Cartamac_${String(q.id).replace(/[^a-zA-Z0-9_-]/g,'_')}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),10000);notify('JSON da solicitação exportado. Anexos devem ser baixados separadamente.');
+    const company=quoteCompanyName(q).replace(/[<>:"/\\|?*\x00-\x1f]/g,' ').trim().replace(/\s+/g,' ').toUpperCase()||'EMPRESA';
+    const sequence=quoteSequenceMap(db.quotes).get(String(q.id))||String(q.id).replace(/[^0-9A-Za-z_-]/g,'_');
+    link.href=url;link.download=`Solicitação_${company}_${sequence}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),10000);notify('JSON da solicitação exportado. Anexos devem ser baixados separadamente.');
   }
   // Rascunho comercial local: nunca persiste custos, índices ou o JSON importado.
   let proposalRequestId=null,proposalBudgetData=null,manualProposalRequest=null;
@@ -1331,11 +1549,11 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   function openProposalBuilder(id){
     if(user?.role!=='admin')return;
     const request=manualProposalRequest?.id===String(id)?manualProposalRequest:db.quotes.find(q=>String(q.id)===String(id));if(!request||request.type==='third-party')return;
-    proposalRequestId=String(id);proposalBudgetData=null;$('proposalBudgetFile').value='';$('proposalDelivery').value='';$('proposalPayment').value='50% no pedido\n30% na entrega\n20% a 28 dias da entrega';
+    proposalRequestId=String(id);proposalBudgetData=request.manual?manualProposalBudgetData:null;$('proposalBudgetFile').value='';$('proposalDelivery').value='';$('proposalPayment').value='50% no pedido\n30% na entrega\n20% a 28 dias da entrega';
     const client=request.manual?null:db.users.find(account=>request.clientUid?account.uid===request.clientUid:account.id===request.clientId);
     const cover={proposalCompany:client?.company||request.company||'',proposalAddress:client?.addressLine||request.addressLine||'',proposalCity:client?.cityState||request.cityState||'',proposalCompanyPhone:client?.companyPhone||request.companyPhone||request.phone||'',proposalReference:request.manual?request.reference||'Proposta avulsa':`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id}`,proposalEquipmentTitle:[...new Set((request.items||[]).map(item=>item.equipmentName||catalog[item.equipment]?.equipment).filter(Boolean))].join(' / ').slice(0,240)};
     for(const [field,value] of Object.entries(cover))$(field).value=value;$('proposalExtraContacts').replaceChildren();for(const contact of (client?.contacts?.length?client.contacts:Array.isArray(request.contacts)?request.contacts:[{name:request.contactName||'',email:request.email||'',phone:request.phone||''}]))if(contact.name||contact.email||contact.phone)addExtraContact('proposalExtraContacts',contact);$('proposalRepresentative').value='';
-    $('proposalBuilderPreview').replaceChildren();setProposalDownloadsDisabled(true);$('proposalBuilderSubtitle').textContent=request.manual?`Proposta avulsa · ${quoteCompanyName(request)}`:`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id} · ${quoteCompanyName(request)}`;$('proposalBuilderMessage').textContent='Selecione o orçamento editável e confira os dados da capa, prazo e pagamento.';$('proposalBuilder').showModal();
+    $('proposalBuilderPreview').replaceChildren();setProposalDownloadsDisabled(true);$('proposalBuilderSubtitle').textContent=request.manual?`Proposta avulsa · ${quoteCompanyName(request)}`:`Solicitação ${quoteSequenceMap(db.quotes).get(String(id))||id} · ${quoteCompanyName(request)}`;$('proposalBuilderMessage').textContent='Selecione o orçamento editável e confira os dados da capa, prazo e pagamento.';$('proposalBuilder').showModal();if(proposalBudgetData)renderProposalBudget(proposalBudgetData);
   }
   function closeProposalBuilder(){proposalRequestId=null;proposalBudgetData=null;$('proposalBudgetFile').value='';$('proposalDelivery').value='';$('proposalPayment').value='';for(const id of ['proposalCompany','proposalAddress','proposalCity','proposalCompanyPhone','proposalReference','proposalEquipmentTitle'])$(id).value='';$('proposalExtraContacts').replaceChildren();$('proposalRepresentative').value='';$('proposalBuilderPreview').replaceChildren();setProposalDownloadsDisabled(true);if($('proposalBuilder').open)$('proposalBuilder').close()}
   function renderRequests(){
@@ -1363,7 +1581,33 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     });
   }
   // Proposta avulsa: usa o catálogo atual sem criar solicitação no Firebase.
-  let manualProposalItems=[];
+  let manualProposalItems=[],manualProposalBudgetData=null;
+  function manualProposalClearBudget(message){
+    if(!manualProposalBudgetData)return;
+    manualProposalBudgetData=null;
+    $('manualImportBudgetStatus').textContent=message||'A seleção foi alterada. Importe novamente o JSON para recuperar os preços.';
+  }
+  async function manualProposalImportFile(file){
+    if(!file)return;
+    if(file.size>5*1024*1024)throw Error('Arquivo acima do limite de 5 MB.');
+    let data;try{data=JSON.parse(await file.text())}catch(_){throw Error('O arquivo selecionado não é um JSON válido.')}
+    const budget=calculateProposalBudget(data);
+    if(manualProposalItems.length&&!confirm('Substituir as peças atuais pelas peças e valores deste arquivo?'))return false;
+    const items=data.items.map((raw,index)=>{
+      const code=String(raw.code||'').trim().toUpperCase(),match=proposalCatalogMatch(code);
+      return {stage:match?stageFor(catalog[match.e].category):'OUTROS',equipment:match?match.e:-1,part:match?match.p:-1,equipmentName:match?catalog[match.e].equipment:String(raw.group||'Item da formação de preço'),partName:match?catalog[match.e].parts[match.p]:String(raw.equipment||code),drawingCode:code,quantity:Number(raw.quantity),specification:'',imported:true};
+    });
+    manualProposalItems=items;manualProposalBudgetData=data;manualProposalRenderItems();
+    const matched=items.filter(item=>item.equipment>=0).length;
+    $('manualImportBudgetStatus').textContent=file.name+' · '+items.length+' peça(s) · '+matched+' vinculada(s) ao catálogo · total '+proposalMoney(budget.totalCents/100)+'.'+(matched<items.length?' Revise as descrições técnicas dos itens sem vínculo.':'');
+    notify('Peças e valores importados da formação de preço.');return true;
+  }
+  $('manualImportBudgetButton').addEventListener('click',()=>$('manualImportBudgetFile').click());
+  $('manualImportBudgetFile').addEventListener('change',async event=>{
+    const file=event.target.files?.[0];if(!file)return;
+    try{await manualProposalImportFile(file)}catch(error){$('manualImportBudgetStatus').textContent=error.message||'Não foi possível importar o arquivo.';notify('Não foi possível importar o orçamento.')}
+    finally{event.target.value=''}
+  });
   function renderManualProposal(){
     if(user?.role!=='admin')return;
     const clientSelect=$('manualRegisteredClient'),selectedClient=clientSelect.value;
@@ -1389,7 +1633,9 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     $('manualSpecification').placeholder=detail.allowSpecification?String(detail.specificationPrompt||'Informe a especificação desta peça'):'Opcional: medida, furo ou característica';
   }
   function manualProposalRenderItems(){
-    $('manualItems').innerHTML=manualProposalItems.length?manualProposalItems.map((item,index)=>'<div class="manual-item"><div><b>'+esc(partLabel(item.partName,item.specification))+'</b><small>'+esc(item.equipmentName)+' · '+esc(item.drawingCode)+' · Qtd. '+item.quantity+'</small></div><button type="button" class="btn secondary" data-manual-remove="'+index+'">Retirar</button></div>').join(''):'<p class="small-note">Nenhuma peça adicionada.</p>';
+    const priced=manualProposalBudgetData?calculateProposalBudget(manualProposalBudgetData).items:[];
+    $('manualItems').innerHTML=manualProposalItems.length?manualProposalItems.map((item,index)=>'<div class="manual-item"><div><b>'+esc(partLabel(item.partName,item.specification))+'</b><small>'+esc(item.equipmentName)+' · '+esc(item.drawingCode)+' · Qtd. '+item.quantity+'</small>'+(priced[index]?'<small class="manual-item-price">Unitário '+proposalMoney(priced[index].unitCents/100)+' · Total '+proposalMoney(priced[index].totalCents/100)+'</small>':'')+'</div><button type="button" class="btn secondary" data-manual-remove="'+index+'">Retirar</button></div>').join(''):'<p class="small-note">Nenhuma peça adicionada.</p>';
+    if(!manualProposalBudgetData&&manualProposalItems.length)$('manualImportBudgetStatus').textContent='Peças sem preços importados. Importe o JSON da formação de preço antes de gerar a proposta.';
   }
   function manualProposalAdd(){
     if(user?.role!=='admin')return;
@@ -1397,6 +1643,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
     if(!canQuote($('manualEquipment').value,$('manualPart').value)){notify('Selecione uma peça cadastrada com código de desenho.');return}
     if(!Number.isSafeInteger(quantity)||quantity<1||quantity>100000){notify('Informe uma quantidade válida.');return}
     if(detail.allowSpecification&&!specification){notify('Informe a especificação obrigatória desta peça.');return}
+    manualProposalClearBudget();
     manualProposalItems.push({stage:stageFor(catalog[e].category),equipment:e,part:p,equipmentName:catalog[e].equipment,partName:catalog[e].parts[p],drawingCode:drawingCode(e,p),quantity,specification});
     $('manualQuantity').value='1';$('manualSpecification').value='';manualProposalRenderItems();notify('Peça adicionada à proposta.');
   }
@@ -1421,7 +1668,7 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   $('manualEquipment').addEventListener('change',manualProposalEquipmentChanged);
   $('manualPart').addEventListener('change',manualProposalPartChanged);
   $('manualAddPart').addEventListener('click',manualProposalAdd);
-  $('manualItems').addEventListener('click',event=>{const button=event.target.closest('[data-manual-remove]');if(!button)return;manualProposalItems.splice(Number(button.dataset.manualRemove),1);manualProposalRenderItems()});
+  $('manualItems').addEventListener('click',event=>{const button=event.target.closest('[data-manual-remove]');if(!button)return;manualProposalClearBudget();manualProposalItems.splice(Number(button.dataset.manualRemove),1);manualProposalRenderItems()});
   $('manualOpenProposal').addEventListener('click',manualProposalOpen);
   $('requestsList').addEventListener('click',event=>{const button=event.target.closest('[data-build-proposal]');if(button)openProposalBuilder(button.dataset.buildProposal)});
   $('proposalBudgetFile').insertAdjacentHTML('afterend','<button id="downloadProposalDraft" class="btn secondary" type="button" disabled>Baixar HTML</button><button id="downloadProposalPdf" class="btn secondary" type="button" disabled>Salvar em PDF</button><button id="downloadProposalWord" class="btn secondary" type="button" disabled>Baixar Word (.docx)</button>');
@@ -1646,8 +1893,6 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   });
   $('requestsList').addEventListener('click',async ev=>{const exportButton=ev.target.closest('[data-export-quote]');if(exportButton){downloadPortalQuoteJson(exportButton.dataset.exportQuote);return}const statusButton=ev.target.closest('[data-quote-status]');if(statusButton){if(user?.role!=='admin')return;const q=db.quotes.find(item=>String(item.id)===statusButton.dataset.quoteId),status=statusButton.dataset.quoteStatus;if(!q||!['em-analise','enviado'].includes(status)||q.status===status)return;const previous=q.status,previousSentAt=q.sentAt;q.status=status;if(status==='enviado')q.sentAt=new Date().toISOString();else delete q.sentAt;if(!await persist()){q.status=previous;if(previousSentAt===undefined)delete q.sentAt;else q.sentAt=previousSentAt;renderRequests();return}renderRequests();notify(status==='enviado'?'Proposta marcada como enviada. A solicitação ficará visível por 30 dias.':'Solicitação marcada em análise.');return}const download=ev.target.closest('[data-third-download]');if(download){const file=db.quoteAttachments?.[Number(download.dataset.thirdDownload)]?.[Number(download.dataset.fileIndex)];if(!file)return;const url=URL.createObjectURL(new Blob([file.data],{type:file.type||'application/octet-stream'})),link=document.createElement('a');link.href=url;link.download=file.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),10000);return}const row=ev.target.closest('[data-quote-client]');if(row){selectedQuoteClient=row.dataset.quoteClient;renderRequests();return}if(ev.target.closest('[data-quote-back]')){selectedQuoteClient=null;renderRequests()}});
   $('thirdFiles').disabled=true;
-  $('loginForm').insertAdjacentHTML('afterend','<button id="resetPassword" type="button" class="btn secondary" style="margin-top:10px">Esqueci minha senha</button>');
-  $('resetPassword').addEventListener('click',async()=>{const email=$('loginEmail').value.trim();if(!email){$('loginError').textContent='Informe seu e-mail acima para receber a redefinição de senha.';return}try{await sendPasswordResetEmail(auth,email);$('loginError').textContent='Se esta conta estiver cadastrada, você receberá um e-mail para redefinir a senha.'}catch(error){console.error(error);$('loginError').textContent='Não foi possível enviar o e-mail agora. Tente novamente.'}});
   $('thirdFiles').closest('.form-group')?.insertAdjacentHTML('beforeend','<small class="muted">Anexos online indisponíveis por enquanto. Envie fotos e desenhos por e-mail após registrar a solicitação.</small>');
   $('editEquipmentPhoto').closest('.form-group')?.insertAdjacentHTML('beforeend','<small class="muted">JPG, PNG ou WebP. A foto é reduzida automaticamente e substitui a anterior ao salvar.</small>');
   $('editPartPhoto').closest('.form-group')?.insertAdjacentHTML('beforeend','<small class="muted">JPG, PNG ou WebP. A foto é reduzida automaticamente e substitui a anterior ao salvar.</small>');
@@ -1655,20 +1900,21 @@ import { getFirestore, collection, doc, getDoc, getDocs, query, where, writeBatc
   $('thirdResultBlock').querySelector('.small-note').textContent='Ao registrar, a solicitação ficará disponível para a equipe CARTAMAC. Fotos e desenhos devem ser enviados separadamente por e-mail.';
   document.querySelector('#page-requests .lede').textContent='Selecione um cliente para consultar as solicitações registradas no portal.';
   document.querySelector('#page-catalog-admin .notice').textContent='Cadastros, descrições e fotos são compartilhados pelo Firebase. Cada foto é compactada e salva separadamente. Confira a imagem antes de usar na proposta.';
+  window.__portalLoginReady=true;
   onAuthStateChanged(auth,async authenticated=>{
     closeProposalBuilder();
     manualProposalRequest=null;manualProposalItems=[];
     for(const field of document.querySelectorAll('#page-manual-proposal input'))if(field.id!=='manualQuantity')field.value='';
     $('manualQuantity').value='1';
     user=null;firebaseUser=authenticated;cart={};cartSpecs={};db=emptyDb();savedDb=null;lastVisibleQuoteIds=null;
-    document.body.classList.remove('role-admin','role-client');$('loginScreen').classList.remove('hidden');$('loginPassword').value='';
-    if(!authenticated){$('loginError').textContent='';return}
+    document.body.classList.remove('role-admin','role-client');$('loginScreen').classList.remove('hidden');
+    if(!authenticated){$('loginError').textContent=authFailureMessage;return}
     $('loginError').textContent='Carregando seu acesso...';
     try{
       const profileSnap=await getDoc(doc(firestore,'portalUsers',authenticated.uid));
       if(!profileSnap.exists()||!['admin','client'].includes(profileSnap.data().role))throw Error('Acesso não cadastrado no portal. Peça à equipe CARTAMAC para liberar sua conta.');
-      const profile=profileSnap.data();await loadPortalData(profile);try{await reconcileOldQuotes()}catch(error){console.warn('Não foi possível atualizar as solicitações antigas:',error)}savedDb=structuredClone(db);$('loginError').textContent='';enter(profile);
-    }catch(error){console.error(error);await signOut(auth);$('loginError').textContent=error.message||'Não foi possível carregar sua conta.'}
+      const profile=profileSnap.data();await loadPortalData(profile);try{await reconcileOldQuotes()}catch(error){console.warn('Não foi possível atualizar as solicitações antigas:',error)}savedDb=structuredClone(db);authFailureMessage='';$('loginError').textContent='';$('loginPassword').value='';enter(profile);
+    }catch(error){console.error(error);authFailureMessage=error.message||'Não foi possível carregar sua conta.';try{await signOut(auth)}catch(signOutError){console.error(signOutError)}$('loginError').textContent=authFailureMessage}
   });
 })();
   </script>
